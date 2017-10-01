@@ -38,6 +38,7 @@
             this.txtLogicalName = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.gbNewAttribute = new System.Windows.Forms.GroupBox();
+            this.lblPrefix = new System.Windows.Forms.Label();
             this.llRandom = new System.Windows.Forms.LinkLabel();
             this.llDatetime = new System.Windows.Forms.LinkLabel();
             this.llSeqnum = new System.Windows.Forms.LinkLabel();
@@ -55,23 +56,25 @@
             this.txtDisplayName = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.gbExisting = new System.Windows.Forms.GroupBox();
+            this.gridAttributes = new System.Windows.Forms.DataGridView();
+            this.Attribute = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Format = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbTarget = new System.Windows.Forms.GroupBox();
             this.cmbSolution = new System.Windows.Forms.ComboBox();
+            this.btnNew = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
-            this.gbExisting = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.btnSetSeed = new System.Windows.Forms.Button();
-            this.lblPrefix = new System.Windows.Forms.Label();
+            this.txtSeed = new System.Windows.Forms.TextBox();
             this.toolStrip1.SuspendLayout();
             this.gbNewAttribute.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.gbTarget.SuspendLayout();
             this.gbExisting.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridAttributes)).BeginInit();
+            this.gbTarget.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -80,7 +83,7 @@
             this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(906, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(870, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -110,7 +113,7 @@
             this.cmbEntities.FormattingEnabled = true;
             this.cmbEntities.Location = new System.Drawing.Point(106, 52);
             this.cmbEntities.Name = "cmbEntities";
-            this.cmbEntities.Size = new System.Drawing.Size(351, 21);
+            this.cmbEntities.Size = new System.Drawing.Size(314, 21);
             this.cmbEntities.TabIndex = 2;
             this.cmbEntities.SelectedIndexChanged += new System.EventHandler(this.cmbEntities_SelectedIndexChanged);
             // 
@@ -127,9 +130,10 @@
             // 
             this.txtLogicalName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtLogicalName.Enabled = false;
             this.txtLogicalName.Location = new System.Drawing.Point(160, 26);
             this.txtLogicalName.Name = "txtLogicalName";
-            this.txtLogicalName.Size = new System.Drawing.Size(297, 20);
+            this.txtLogicalName.Size = new System.Drawing.Size(263, 20);
             this.txtLogicalName.TabIndex = 1;
             // 
             // contextMenuStrip1
@@ -139,8 +143,8 @@
             // 
             // gbNewAttribute
             // 
-            this.gbNewAttribute.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbNewAttribute.Controls.Add(this.label9);
+            this.gbNewAttribute.Controls.Add(this.txtSeed);
             this.gbNewAttribute.Controls.Add(this.lblPrefix);
             this.gbNewAttribute.Controls.Add(this.llRandom);
             this.gbNewAttribute.Controls.Add(this.llDatetime);
@@ -160,18 +164,28 @@
             this.gbNewAttribute.Controls.Add(this.label4);
             this.gbNewAttribute.Controls.Add(this.txtLogicalName);
             this.gbNewAttribute.Controls.Add(this.label2);
+            this.gbNewAttribute.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbNewAttribute.Enabled = false;
-            this.gbNewAttribute.Location = new System.Drawing.Point(12, 103);
+            this.gbNewAttribute.Location = new System.Drawing.Point(0, 0);
             this.gbNewAttribute.Name = "gbNewAttribute";
-            this.gbNewAttribute.Size = new System.Drawing.Size(471, 272);
+            this.gbNewAttribute.Size = new System.Drawing.Size(437, 294);
             this.gbNewAttribute.TabIndex = 2;
             this.gbNewAttribute.TabStop = false;
             this.gbNewAttribute.Text = "New Auto Numbered attribute";
             // 
+            // lblPrefix
+            // 
+            this.lblPrefix.AutoSize = true;
+            this.lblPrefix.Location = new System.Drawing.Point(106, 29);
+            this.lblPrefix.Name = "lblPrefix";
+            this.lblPrefix.Size = new System.Drawing.Size(33, 13);
+            this.lblPrefix.TabIndex = 24;
+            this.lblPrefix.Text = "new_";
+            // 
             // llRandom
             // 
             this.llRandom.AutoSize = true;
-            this.llRandom.Location = new System.Drawing.Point(258, 181);
+            this.llRandom.Location = new System.Drawing.Point(256, 183);
             this.llRandom.Name = "llRandom";
             this.llRandom.Size = new System.Drawing.Size(79, 13);
             this.llRandom.TabIndex = 9;
@@ -182,7 +196,7 @@
             // llDatetime
             // 
             this.llDatetime.AutoSize = true;
-            this.llDatetime.Location = new System.Drawing.Point(167, 182);
+            this.llDatetime.Location = new System.Drawing.Point(166, 183);
             this.llDatetime.Name = "llDatetime";
             this.llDatetime.Size = new System.Drawing.Size(84, 13);
             this.llDatetime.TabIndex = 8;
@@ -208,7 +222,7 @@
             this.txtSample.Location = new System.Drawing.Point(106, 203);
             this.txtSample.Name = "txtSample";
             this.txtSample.ReadOnly = true;
-            this.txtSample.Size = new System.Drawing.Size(351, 20);
+            this.txtSample.Size = new System.Drawing.Size(317, 20);
             this.txtSample.TabIndex = 10;
             // 
             // label3
@@ -238,11 +252,11 @@
             // 
             // btnCreateNew
             // 
-            this.btnCreateNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCreateNew.Location = new System.Drawing.Point(323, 238);
+            this.btnCreateNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCreateNew.Location = new System.Drawing.Point(289, 259);
             this.btnCreateNew.Name = "btnCreateNew";
             this.btnCreateNew.Size = new System.Drawing.Size(134, 23);
-            this.btnCreateNew.TabIndex = 11;
+            this.btnCreateNew.TabIndex = 12;
             this.btnCreateNew.Text = "Create attribute";
             this.btnCreateNew.UseVisualStyleBackColor = true;
             this.btnCreateNew.Click += new System.EventHandler(this.btnCreateNew_Click);
@@ -260,11 +274,9 @@
             // 
             // txtMaxLen
             // 
-            this.txtMaxLen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtMaxLen.Location = new System.Drawing.Point(106, 104);
             this.txtMaxLen.Name = "txtMaxLen";
-            this.txtMaxLen.Size = new System.Drawing.Size(351, 20);
+            this.txtMaxLen.Size = new System.Drawing.Size(100, 20);
             this.txtMaxLen.TabIndex = 4;
             // 
             // label7
@@ -282,7 +294,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNumberFormat.Location = new System.Drawing.Point(106, 156);
             this.txtNumberFormat.Name = "txtNumberFormat";
-            this.txtNumberFormat.Size = new System.Drawing.Size(351, 20);
+            this.txtNumberFormat.Size = new System.Drawing.Size(317, 20);
             this.txtNumberFormat.TabIndex = 6;
             this.txtNumberFormat.TextChanged += new System.EventHandler(this.txtNumberFormat_TextChanged);
             // 
@@ -292,7 +304,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDescription.Location = new System.Drawing.Point(106, 78);
             this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(351, 20);
+            this.txtDescription.Size = new System.Drawing.Size(317, 20);
             this.txtDescription.TabIndex = 3;
             // 
             // label5
@@ -310,7 +322,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDisplayName.Location = new System.Drawing.Point(106, 52);
             this.txtDisplayName.Name = "txtDisplayName";
-            this.txtDisplayName.Size = new System.Drawing.Size(351, 20);
+            this.txtDisplayName.Size = new System.Drawing.Size(317, 20);
             this.txtDisplayName.TabIndex = 2;
             // 
             // label4
@@ -330,27 +342,70 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.gbExisting);
             this.splitContainer1.Panel1.Controls.Add(this.gbTarget);
-            this.splitContainer1.Panel1.Controls.Add(this.gbNewAttribute);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.gbExisting);
-            this.splitContainer1.Size = new System.Drawing.Size(906, 552);
-            this.splitContainer1.SplitterDistance = 495;
+            this.splitContainer1.Panel2.Controls.Add(this.gbNewAttribute);
+            this.splitContainer1.Size = new System.Drawing.Size(870, 552);
+            this.splitContainer1.SplitterDistance = 429;
             this.splitContainer1.TabIndex = 7;
+            // 
+            // gbExisting
+            // 
+            this.gbExisting.Controls.Add(this.gridAttributes);
+            this.gbExisting.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbExisting.Location = new System.Drawing.Point(0, 111);
+            this.gbExisting.Name = "gbExisting";
+            this.gbExisting.Size = new System.Drawing.Size(429, 441);
+            this.gbExisting.TabIndex = 3;
+            this.gbExisting.TabStop = false;
+            this.gbExisting.Text = "Existing Auto Number attributes";
+            // 
+            // gridAttributes
+            // 
+            this.gridAttributes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridAttributes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridAttributes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Attribute,
+            this.Format});
+            this.gridAttributes.Location = new System.Drawing.Point(9, 22);
+            this.gridAttributes.Name = "gridAttributes";
+            this.gridAttributes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridAttributes.Size = new System.Drawing.Size(411, 413);
+            this.gridAttributes.TabIndex = 20;
+            this.gridAttributes.SelectionChanged += new System.EventHandler(this.gridAttributes_SelectionChanged);
+            // 
+            // Attribute
+            // 
+            this.Attribute.DataPropertyName = "Attribute";
+            this.Attribute.FillWeight = 150F;
+            this.Attribute.HeaderText = "Attribute";
+            this.Attribute.Name = "Attribute";
+            this.Attribute.ReadOnly = true;
+            // 
+            // Format
+            // 
+            this.Format.DataPropertyName = "Format";
+            this.Format.FillWeight = 200F;
+            this.Format.HeaderText = "Format";
+            this.Format.Name = "Format";
+            this.Format.ReadOnly = true;
             // 
             // gbTarget
             // 
-            this.gbTarget.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbTarget.Controls.Add(this.cmbSolution);
+            this.gbTarget.Controls.Add(this.btnNew);
             this.gbTarget.Controls.Add(this.label8);
             this.gbTarget.Controls.Add(this.cmbEntities);
             this.gbTarget.Controls.Add(this.label1);
-            this.gbTarget.Location = new System.Drawing.Point(12, 13);
+            this.gbTarget.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbTarget.Location = new System.Drawing.Point(0, 0);
             this.gbTarget.Name = "gbTarget";
-            this.gbTarget.Size = new System.Drawing.Size(471, 84);
+            this.gbTarget.Size = new System.Drawing.Size(429, 111);
             this.gbTarget.TabIndex = 1;
             this.gbTarget.TabStop = false;
             this.gbTarget.Text = "Target";
@@ -363,9 +418,20 @@
             this.cmbSolution.FormattingEnabled = true;
             this.cmbSolution.Location = new System.Drawing.Point(106, 26);
             this.cmbSolution.Name = "cmbSolution";
-            this.cmbSolution.Size = new System.Drawing.Size(351, 21);
+            this.cmbSolution.Size = new System.Drawing.Size(314, 21);
             this.cmbSolution.TabIndex = 1;
             this.cmbSolution.SelectedIndexChanged += new System.EventHandler(this.cmbSolution_SelectedIndexChanged);
+            // 
+            // btnNew
+            // 
+            this.btnNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNew.Location = new System.Drawing.Point(106, 79);
+            this.btnNew.Name = "btnNew";
+            this.btnNew.Size = new System.Drawing.Size(134, 23);
+            this.btnNew.TabIndex = 19;
+            this.btnNew.Text = "New Attribute";
+            this.btnNew.UseVisualStyleBackColor = true;
+            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
             // 
             // label8
             // 
@@ -376,67 +442,22 @@
             this.label8.TabIndex = 3;
             this.label8.Text = "Solution";
             // 
-            // gbExisting
-            // 
-            this.gbExisting.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbExisting.Controls.Add(this.btnSetSeed);
-            this.gbExisting.Controls.Add(this.textBox1);
-            this.gbExisting.Controls.Add(this.label10);
-            this.gbExisting.Controls.Add(this.label9);
-            this.gbExisting.Enabled = false;
-            this.gbExisting.Location = new System.Drawing.Point(14, 13);
-            this.gbExisting.Name = "gbExisting";
-            this.gbExisting.Size = new System.Drawing.Size(379, 525);
-            this.gbExisting.TabIndex = 3;
-            this.gbExisting.TabStop = false;
-            this.gbExisting.Text = "Existing Auto Number attributes";
-            // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(103, 100);
+            this.label9.Location = new System.Drawing.Point(6, 232);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(124, 13);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "Available in next version!";
+            this.label9.Size = new System.Drawing.Size(32, 13);
+            this.label9.TabIndex = 26;
+            this.label9.Text = "Seed";
             // 
-            // label10
+            // txtSeed
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 296);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(57, 13);
-            this.label10.TabIndex = 1;
-            this.label10.Text = "New Seed";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(106, 293);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 18;
-            // 
-            // btnSetSeed
-            // 
-            this.btnSetSeed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSetSeed.Location = new System.Drawing.Point(228, 291);
-            this.btnSetSeed.Name = "btnSetSeed";
-            this.btnSetSeed.Size = new System.Drawing.Size(134, 23);
-            this.btnSetSeed.TabIndex = 19;
-            this.btnSetSeed.Text = "Set new seed";
-            this.btnSetSeed.UseVisualStyleBackColor = true;
-            this.btnSetSeed.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // lblPrefix
-            // 
-            this.lblPrefix.AutoSize = true;
-            this.lblPrefix.Location = new System.Drawing.Point(106, 29);
-            this.lblPrefix.Name = "lblPrefix";
-            this.lblPrefix.Size = new System.Drawing.Size(33, 13);
-            this.lblPrefix.TabIndex = 24;
-            this.lblPrefix.Text = "new_";
+            this.txtSeed.Location = new System.Drawing.Point(106, 229);
+            this.txtSeed.Name = "txtSeed";
+            this.txtSeed.Size = new System.Drawing.Size(100, 20);
+            this.txtSeed.TabIndex = 11;
+            this.txtSeed.TextChanged += new System.EventHandler(this.txtSeed_TextChanged);
             // 
             // AutoNumMgr
             // 
@@ -445,7 +466,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "AutoNumMgr";
-            this.Size = new System.Drawing.Size(906, 577);
+            this.Size = new System.Drawing.Size(870, 577);
             this.OnCloseTool += new System.EventHandler(this.AutoNumMgr_OnCloseTool);
             this.ConnectionUpdated += new XrmToolBox.Extensibility.PluginControlBase.ConnectionUpdatedHandler(this.AutoNumMgr_ConnectionUpdated);
             this.Load += new System.EventHandler(this.AutoNumMgr_Load);
@@ -457,10 +478,10 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.gbExisting.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridAttributes)).EndInit();
             this.gbTarget.ResumeLayout(false);
             this.gbTarget.PerformLayout();
-            this.gbExisting.ResumeLayout(false);
-            this.gbExisting.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -497,10 +518,12 @@
         private System.Windows.Forms.LinkLabel llDatetime;
         private System.Windows.Forms.LinkLabel llSeqnum;
         private System.Windows.Forms.GroupBox gbExisting;
-        private System.Windows.Forms.Button btnSetSeed;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button btnNew;
         private System.Windows.Forms.Label lblPrefix;
+        private System.Windows.Forms.DataGridView gridAttributes;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Attribute;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Format;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtSeed;
     }
 }

@@ -1,5 +1,4 @@
-﻿using Cinteros.Xrm.CRMWinForm;
-using Microsoft.Xrm.Sdk;
+﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Query;
@@ -11,6 +10,8 @@ using System.Windows.Forms;
 using XrmToolBox.Extensibility;
 using XrmToolBox.Extensibility.Interfaces;
 using XrmToolBox.Extensibility.Args;
+using System.ComponentModel;
+using Microsoft.Crm.Sdk.Messages;
 
 namespace Rappen.XTB.AutoNumManager
 {
@@ -137,7 +138,10 @@ namespace Rappen.XTB.AutoNumManager
                         if (completedargs.Result is RetrieveMetadataChangesResponse)
                         {
                             var metaresponse = ((RetrieveMetadataChangesResponse)completedargs.Result).EntityMetadata;
-                            entities.AddRange(metaresponse.Select(m => new EntityMetadataProxy(m)).OrderBy(e => e.ToString()));
+                            entities.AddRange(metaresponse
+                                .Where(e => e.IsCustomizable.Value == true && e.IsIntersect.Value != true)
+                                .Select(m => new EntityMetadataProxy(m))
+                                .OrderBy(e => e.ToString()));
                         }
                     }
                     EnableControls(true);
@@ -148,11 +152,11 @@ namespace Rappen.XTB.AutoNumManager
         private void FilterEntities()
         {
             cmbEntities.Items.Clear();
-            if (!(cmbSolution.SelectedItem is SolutionProxy))
+            var solution = cmbSolution.SelectedItem as SolutionProxy;
+            if (solution == null)
             {
                 return;
             }
-            var solution = ((SolutionProxy)cmbSolution.SelectedItem);
             lblPrefix.Text = solution.Prefix;
             WorkAsync(new WorkAsyncInfo("Filtering entities...",
                 (eventargs) =>
@@ -185,6 +189,22 @@ namespace Rappen.XTB.AutoNumManager
             });
         }
 
+        private void LoadAttributes()
+        {
+            gridAttributes.DataSource = null;
+            var entity = cmbEntities.SelectedItem as EntityMetadataProxy;
+            var details = MetadataHelper.LoadEntityDetails(Service, entity.Metadata.LogicalName).EntityMetadata.FirstOrDefault();
+            if (details != null)
+            {
+                var attributes = details.Attributes
+                    .Where(a => a.AttributeType == AttributeTypeCode.String && !string.IsNullOrEmpty(a.AutoNumberFormat))
+                    .Select(a => new AttributeProxy((StringAttributeMetadata)a)).ToList();
+                var bindingList = new BindingList<AttributeProxy>(attributes);
+                var source = new BindingSource(bindingList, null);
+                gridAttributes.DataSource = source;
+            }
+        }
+
         private void LoadUserSettings()
         {
             var qx = new QueryExpression("usersettings");
@@ -199,11 +219,53 @@ namespace Rappen.XTB.AutoNumManager
 
         private void btnCreateNew_Click(object sender, EventArgs e)
         {
-            if (DialogResult.OK != MessageBox.Show("Confirm creation!", "Confirm", MessageBoxButtons.OKCancel))
+            if (DialogResult.OK != MessageBox.Show("Confirm!", "Confirm", MessageBoxButtons.OKCancel))
             {
                 return;
             }
-            ExecuteMethod(CreateAttribute);
+            if (txtLogicalName.Enabled)
+            {
+                ExecuteMethod(CreateAttribute);
+            }
+            else
+            {
+                ExecuteMethod(UpdateAttribute);
+            }
+        }
+
+        private void UpdateAttribute()
+        {
+            var langid = int.Parse(txtLanguageId.Text);
+            var attributename = lblPrefix.Text + txtLogicalName.Text;
+            var req = new UpdateAttributeRequest
+            {
+                EntityName = ((EntityMetadataProxy)cmbEntities.SelectedItem).Metadata.LogicalName,
+                Attribute = new StringAttributeMetadata
+                {
+                    AutoNumberFormat = txtNumberFormat.Text,
+                    LogicalName = attributename,
+                    SchemaName = attributename,
+                    RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
+                    MaxLength = int.Parse(txtMaxLen.Text),
+                    DisplayName = new Microsoft.Xrm.Sdk.Label(txtDisplayName.Text, langid),
+                    Description = new Microsoft.Xrm.Sdk.Label(txtDescription.Text, langid)
+                },
+                SolutionUniqueName = (cmbSolution.SelectedItem as SolutionProxy)?.UniqueName
+            };
+
+            try
+            {
+                Service.Execute(req);
+                if (!string.IsNullOrEmpty(txtSeed.Text) && txtSeed.Text != "1")
+                {
+                    SetSeed();
+                }
+                MessageBox.Show("Attribute updated!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Update failed:\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void CreateAttribute()
@@ -223,17 +285,40 @@ namespace Rappen.XTB.AutoNumManager
                     DisplayName = new Microsoft.Xrm.Sdk.Label(txtDisplayName.Text, langid),
                     Description = new Microsoft.Xrm.Sdk.Label(txtDescription.Text, langid)
                 },
-                SolutionUniqueName = cmbSolution.Text
+                SolutionUniqueName = (cmbSolution.SelectedItem as SolutionProxy)?.UniqueName
             };
 
             try
             {
-                var resp = (CreateAttributeResponse)Service.Execute(req);
+                Service.Execute(req);
+                if (!string.IsNullOrEmpty(txtSeed.Text) && txtSeed.Text != "1")
+                {
+                    SetSeed();
+                }
                 MessageBox.Show("Attribute created!");
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Creation failed:\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SetSeed()
+        {
+            var attributename = lblPrefix.Text + txtLogicalName.Text;
+            var req = new SetAutoNumberSeedRequest
+            {
+                EntityName = ((EntityMetadataProxy)cmbEntities.SelectedItem).Metadata.LogicalName,
+                AttributeName = attributename,
+                Value = int.Parse(txtSeed.Text)
+            };
+            try
+            {
+                Service.Execute(req);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Seed update failed:\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -263,60 +348,63 @@ CAS-{SEQNUM:6}-{DATETIMEUTC:yyyyMM}-{RANDSTRING:6}-{DATETIMEUTC:hhmmss}	CAS-0020
         private void cmbEntities_SelectedIndexChanged(object sender, EventArgs e)
         {
             gbNewAttribute.Enabled = cmbEntities.SelectedItem is EntityMetadataProxy;
+            LoadAttributes();
         }
 
         private void txtNumberFormat_TextChanged(object sender, EventArgs e)
         {
-            txtSample.Text = ParseNumberFormat(txtNumberFormat.Text);
+            txtSample.Text = ParseNumberFormat(txtNumberFormat.Text, txtSeed.Text);
         }
 
-        private string ParseNumberFormat(string format)
+        private void txtSeed_TextChanged(object sender, EventArgs e)
+        {
+            txtSample.Text = ParseNumberFormat(txtNumberFormat.Text, txtSeed.Text);
+        }
+
+        private string ParseNumberFormat(string format, string seed)
         {
             try
             {
-                VerifySEQNUM(format);
-                format = ParseFormatSEQNUM(format);
+                format = ParseFormatSEQNUM(format, seed);
                 format = ParseFormatRANDSTRING(format);
                 format = ParseFormatDATETIMEUTC(format);
                 SendMessageToStatusBar(this, new StatusBarMessageEventArgs("Format successfully parsed"));
+                btnCreateNew.Enabled = true;
             }
             catch (Exception ex)
             {
                 SendMessageToStatusBar(this, new StatusBarMessageEventArgs(ex.Message));
                 format = $"Format error: {ex.Message}";
+                btnCreateNew.Enabled = false;
             }
-
             return format;
         }
 
-        private void VerifySEQNUM(string format)
+        private string ParseFormatSEQNUM(string format, string seed)
         {
-            var numbered = ParseFormatSEQNUM(format);
-            if (numbered.Equals(format))
+            if (!format.Contains("{SEQNUM:") || !format.Contains("}"))
             {
-                throw new FormatException("Format string must contain at least one {SEQNUM:n} placeholder.");
+                throw new FormatException("Format string must contain a {SEQNUM:n} placeholder.");
             }
-        }
-
-        private string ParseFormatSEQNUM(string format)
-        {
-            while (format.Contains("{SEQNUM:") && format.Contains("}"))
+            var lenghtstr = format.Split(new string[] { "{SEQNUM:" }, StringSplitOptions.None)[1];
+            lenghtstr = lenghtstr.Split('}')[0];
+            if (int.TryParse(lenghtstr, out int length))
             {
-                var lenghtstr = format.Split(new string[] { "{SEQNUM:" }, StringSplitOptions.None)[1];
-                lenghtstr = lenghtstr.Split('}')[0];
-                if (int.TryParse(lenghtstr, out int length))
+                if (length < 1)
                 {
-                    if (length < 1)
-                    {
-                        throw new FormatException("SEQNUM length must be 1 or higher.");
-                    }
-                    var sequence = "0123456789".Substring(0, length);
-                    format = format.Replace("{SEQNUM:" + lenghtstr + "}", sequence);
+                    throw new FormatException("SEQNUM length must be 1 or higher.");
                 }
-                else
-                {
-                    throw new FormatException("Invalid SEQNUM format. Enter as {SEQNUM:n} where n is length of sequence.");
-                }
+                var seedno = string.IsNullOrEmpty(seed) ? 1 : int.Parse(seed);
+                var sequence = string.Format("{0:" + new string('0', length) + "}", seedno);
+                format = format.Replace("{SEQNUM:" + lenghtstr + "}", sequence);
+            }
+            else
+            {
+                throw new FormatException("Invalid SEQNUM format. Enter as {SEQNUM:n} where n is length of sequence.");
+            }
+            if (format.Contains("{SEQNUM:"))
+            {
+                throw new FormatException("Format string must only contain one {SEQNUM:n} placeholder.");
             }
             return format;
         }
@@ -383,9 +471,53 @@ CAS-{SEQNUM:6}-{DATETIMEUTC:yyyyMM}-{RANDSTRING:6}-{DATETIMEUTC:hhmmss}	CAS-0020
             AddMacro("{RANDSTRING:4}");
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnNew_Click(object sender, EventArgs e)
         {
+            lblPrefix.Text = (cmbSolution.SelectedItem as SolutionProxy)?.Prefix;
+            txtLogicalName.Enabled = true;
+            txtLogicalName.Text = string.Empty;
+            txtDisplayName.Text = string.Empty;
+            txtDescription.Text = string.Empty;
+            txtMaxLen.Text = "100";
+            txtNumberFormat.Text = "{SEQNUM:5}";
+            txtSample.Text = ParseNumberFormat(txtNumberFormat.Text, "1");
+            txtSeed.Text = string.Empty;
+            btnCreateNew.Text = "Create";
+            gbNewAttribute.Enabled = true;
+        }
 
+        private void gridAttributes_SelectionChanged(object sender, EventArgs e)
+        {
+            gbNewAttribute.Enabled = false;
+            SendMessageToStatusBar(this, new StatusBarMessageEventArgs(string.Empty));
+            var grid = sender as DataGridView;
+            if (grid?.SelectedRows?.Count == 0)
+            {
+                return;
+            }
+            var row = grid.SelectedRows[0];
+            var attribute = row.DataBoundItem as AttributeProxy;
+            if (attribute == null)
+            {
+                return;
+            }
+            var logical = attribute.Attribute;
+            if (!logical.Contains("_"))
+            {
+                SendMessageToStatusBar(this, new StatusBarMessageEventArgs("Attribute does not seem to be custom."));
+                return;
+            }
+            lblPrefix.Text = logical.Split('_')[0] + "_";
+            txtLogicalName.Text = logical.Substring(logical.IndexOf("_") + 1);
+            txtDisplayName.Text = attribute.attributeMetadata.DisplayName?.UserLocalizedLabel?.Label;
+            txtDescription.Text = attribute.attributeMetadata.Description?.UserLocalizedLabel?.Label;
+            txtMaxLen.Text = attribute.attributeMetadata.MaxLength?.ToString();
+            txtNumberFormat.Text = attribute.attributeMetadata.AutoNumberFormat;
+            txtSample.Text = ParseNumberFormat(txtNumberFormat.Text, "1");
+            txtSeed.Text = string.Empty;
+            txtLogicalName.Enabled = false;
+            btnCreateNew.Text = "Update";
+            gbNewAttribute.Enabled = true;
         }
     }
 }

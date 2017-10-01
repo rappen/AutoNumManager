@@ -16,17 +16,13 @@ namespace Rappen.XTB.AutoNumManager
             Solution = solutionentity;
         }
 
-        public string Prefix
-        {
-            get
-            {
-                return ((AliasedValue)Solution["P.customizationprefix"]).Value.ToString() + "_";
-            }
-        }
+        public string Prefix { get { return ((AliasedValue)Solution["P.customizationprefix"]).Value.ToString() + "_"; } }
+
+        public string UniqueName { get { return Solution["uniquename"].ToString(); } }
 
         public override string ToString()
         {
-            return $"{Solution["friendlyname"]} ({Solution["uniquename"]}";
+            return $"{Solution["friendlyname"]} ({Solution["uniquename"]})";
         }
     }
 }
