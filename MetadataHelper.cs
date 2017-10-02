@@ -11,7 +11,7 @@ namespace Rappen.XTB.AutoNumManager
     {
         private static Dictionary<string, EntityMetadata> entities = new Dictionary<string, EntityMetadata>();
 
-        public static String[] entityProperties = { "LogicalName", "DisplayName", "ObjectTypeCode", "IsManaged", "IsCustomizable", "IsCustomEntity", "IsIntersect", "IsValidForAdvancedFind" };
+        public static String[] entityProperties = { "LogicalName", "DisplayName", "PrimaryNameAttribute", "ObjectTypeCode", "IsManaged", "IsCustomizable", "IsCustomEntity", "IsIntersect", "IsValidForAdvancedFind" };
         public static String[] entityDetails = { "Attributes" };
         public static String[] attributeProperties = { "DisplayName", "Description", "AttributeType", "IsManaged", "IsCustomizable", "IsCustomAttribute", "SchemaName", "AutoNumberFormat", "MaxLength" };
 

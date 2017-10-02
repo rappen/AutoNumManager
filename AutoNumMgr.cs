@@ -12,15 +12,17 @@ using XrmToolBox.Extensibility.Interfaces;
 using XrmToolBox.Extensibility.Args;
 using System.ComponentModel;
 using Microsoft.Crm.Sdk.Messages;
+using System.Reflection;
 
 namespace Rappen.XTB.AutoNumManager
 {
-    public partial class AutoNumMgr : PluginControlBase, IStatusBarMessager
+    public partial class AutoNumMgr : PluginControlBase, IStatusBarMessager, IMessageBusHost
     {
         private Settings mySettings;
         private List<EntityMetadataProxy> entities;
 
         public event EventHandler<StatusBarMessageEventArgs> SendMessageToStatusBar;
+        public event EventHandler<MessageBusEventArgs> OnOutgoingMessage;
 
         public AutoNumMgr()
         {
@@ -55,6 +57,7 @@ namespace Rappen.XTB.AutoNumManager
             }
             LogInfo("Connection has changed to: {0}", e.ConnectionDetail.WebApplicationUrl);
             gbNewAttribute.Enabled = false;
+            tsbFXB.Enabled = false;
             cmbEntities.Enabled = false;
             entities = new List<EntityMetadataProxy>();
             var orgver = new Version(e.ConnectionDetail.OrganizationVersion);
@@ -305,10 +308,11 @@ namespace Rappen.XTB.AutoNumManager
 
         private void SetSeed()
         {
+            var entityname = ((EntityMetadataProxy)cmbEntities.SelectedItem).Metadata.LogicalName;
             var attributename = lblPrefix.Text + txtLogicalName.Text;
             var req = new SetAutoNumberSeedRequest
             {
-                EntityName = ((EntityMetadataProxy)cmbEntities.SelectedItem).Metadata.LogicalName,
+                EntityName = entityname,
                 AttributeName = attributename,
                 Value = int.Parse(txtSeed.Text)
             };
@@ -343,11 +347,13 @@ CAS-{SEQNUM:6}-{DATETIMEUTC:yyyyMM}-{RANDSTRING:6}-{DATETIMEUTC:hhmmss}	CAS-0020
         {
             FilterEntities();
             cmbEntities.Enabled = true;
+            tsbFXB.Enabled = false;
         }
 
         private void cmbEntities_SelectedIndexChanged(object sender, EventArgs e)
         {
             gbNewAttribute.Enabled = cmbEntities.SelectedItem is EntityMetadataProxy;
+            tsbFXB.Enabled = cmbEntities.SelectedItem is EntityMetadataProxy;
             LoadAttributes();
         }
 
@@ -518,6 +524,45 @@ CAS-{SEQNUM:6}-{DATETIMEUTC:yyyyMM}-{RANDSTRING:6}-{DATETIMEUTC:hhmmss}	CAS-0020
             txtLogicalName.Enabled = false;
             btnCreateNew.Text = "Update";
             gbNewAttribute.Enabled = true;
+        }
+
+        private void tsbClose_Click(object sender, EventArgs e)
+        {
+            CloseTool();
+        }
+
+        private void tsbFXB_Click(object sender, EventArgs e)
+        {
+            OpenFXB();
+        }
+
+        private void OpenFXB()
+        {
+            var entity = ((EntityMetadataProxy)cmbEntities.SelectedItem).Metadata;
+            var attributes = ((gridAttributes.DataSource as BindingSource)?.DataSource as BindingList<AttributeProxy>).Select(a => a.attributeMetadata.LogicalName);
+            var fetchxml = "<fetch top='10' ><entity name='" + entity.LogicalName + "' >" +
+                "<attribute name='" + entity.PrimaryNameAttribute + "' /><attribute name='createdon' />" +
+                string.Join("", attributes.Select(a => "<attribute name='" + a + "' />")) +
+                "<order attribute='createdon' descending='true' /></entity></fetch>";
+            var messageBusEventArgs = new MessageBusEventArgs("FetchXML Builder")
+            {
+                TargetArgument = fetchxml
+            };
+            OnOutgoingMessage(this, messageBusEventArgs);
+        }
+
+        private void tsbAbout_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(
+                "Auto Number Manager for XrmToolBox\n" +
+                "Version: " + Assembly.GetExecutingAssembly().GetName().Version + "\n\n" +
+                "Developed by Jonas Rapp at Innofactor Sweden.",
+                "About Auto Number Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        public void OnIncomingMessage(MessageBusEventArgs message)
+        {
+            // This plugin does not accept incoming messages
         }
     }
 }

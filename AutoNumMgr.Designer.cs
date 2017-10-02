@@ -31,13 +31,16 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AutoNumMgr));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.tsbClose = new System.Windows.Forms.ToolStripButton();
+            this.tsbFXB = new System.Windows.Forms.ToolStripButton();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbEntities = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtLogicalName = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.gbNewAttribute = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtSeed = new System.Windows.Forms.TextBox();
             this.lblPrefix = new System.Windows.Forms.Label();
             this.llRandom = new System.Windows.Forms.LinkLabel();
             this.llDatetime = new System.Windows.Forms.LinkLabel();
@@ -64,8 +67,8 @@
             this.cmbSolution = new System.Windows.Forms.ComboBox();
             this.btnNew = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.txtSeed = new System.Windows.Forms.TextBox();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbAbout = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.gbNewAttribute.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -80,20 +83,34 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1});
+            this.tsbClose,
+            this.toolStripSeparator1,
+            this.tsbFXB,
+            this.tsbAbout});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(870, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripButton1
+            // tsbClose
             // 
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(56, 22);
-            this.toolStripButton1.Text = "Close";
+            this.tsbClose.Image = ((System.Drawing.Image)(resources.GetObject("tsbClose.Image")));
+            this.tsbClose.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbClose.Name = "tsbClose";
+            this.tsbClose.Size = new System.Drawing.Size(56, 22);
+            this.tsbClose.Text = "Close";
+            this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
+            // 
+            // tsbFXB
+            // 
+            this.tsbFXB.Enabled = false;
+            this.tsbFXB.Image = ((System.Drawing.Image)(resources.GetObject("tsbFXB.Image")));
+            this.tsbFXB.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbFXB.Name = "tsbFXB";
+            this.tsbFXB.Size = new System.Drawing.Size(204, 22);
+            this.tsbFXB.Text = "Show data with FetchXML Builder";
+            this.tsbFXB.Click += new System.EventHandler(this.tsbFXB_Click);
             // 
             // label1
             // 
@@ -172,6 +189,23 @@
             this.gbNewAttribute.TabIndex = 2;
             this.gbNewAttribute.TabStop = false;
             this.gbNewAttribute.Text = "New Auto Numbered attribute";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 232);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(32, 13);
+            this.label9.TabIndex = 26;
+            this.label9.Text = "Seed";
+            // 
+            // txtSeed
+            // 
+            this.txtSeed.Location = new System.Drawing.Point(106, 229);
+            this.txtSeed.Name = "txtSeed";
+            this.txtSeed.Size = new System.Drawing.Size(100, 20);
+            this.txtSeed.TabIndex = 11;
+            this.txtSeed.TextChanged += new System.EventHandler(this.txtSeed_TextChanged);
             // 
             // lblPrefix
             // 
@@ -442,22 +476,20 @@
             this.label8.TabIndex = 3;
             this.label8.Text = "Solution";
             // 
-            // label9
+            // toolStripSeparator1
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 232);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(32, 13);
-            this.label9.TabIndex = 26;
-            this.label9.Text = "Seed";
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // txtSeed
+            // tsbAbout
             // 
-            this.txtSeed.Location = new System.Drawing.Point(106, 229);
-            this.txtSeed.Name = "txtSeed";
-            this.txtSeed.Size = new System.Drawing.Size(100, 20);
-            this.txtSeed.TabIndex = 11;
-            this.txtSeed.TextChanged += new System.EventHandler(this.txtSeed_TextChanged);
+            this.tsbAbout.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsbAbout.Image = ((System.Drawing.Image)(resources.GetObject("tsbAbout.Image")));
+            this.tsbAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbAbout.Name = "tsbAbout";
+            this.tsbAbout.Size = new System.Drawing.Size(91, 22);
+            this.tsbAbout.Text = "About ANM";
+            this.tsbAbout.Click += new System.EventHandler(this.tsbAbout_Click);
             // 
             // AutoNumMgr
             // 
@@ -490,7 +522,7 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton tsbClose;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmbEntities;
         private System.Windows.Forms.Label label2;
@@ -525,5 +557,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Format;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtSeed;
+        private System.Windows.Forms.ToolStripButton tsbFXB;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton tsbAbout;
     }
 }
