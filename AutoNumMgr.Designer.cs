@@ -63,13 +63,13 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gbExisting = new System.Windows.Forms.GroupBox();
             this.gridAttributes = new System.Windows.Forms.DataGridView();
-            this.Attribute = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Format = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbTarget = new System.Windows.Forms.GroupBox();
             this.cmbSolution = new System.Windows.Forms.ComboBox();
             this.btnNew = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.Attribute = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Format = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             this.gbAttribute.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -430,22 +430,6 @@
             this.gridAttributes.TabIndex = 20;
             this.gridAttributes.SelectionChanged += new System.EventHandler(this.gridAttributes_SelectionChanged);
             // 
-            // Attribute
-            // 
-            this.Attribute.DataPropertyName = "Attribute";
-            this.Attribute.FillWeight = 150F;
-            this.Attribute.HeaderText = "Attribute";
-            this.Attribute.Name = "Attribute";
-            this.Attribute.ReadOnly = true;
-            // 
-            // Format
-            // 
-            this.Format.DataPropertyName = "Format";
-            this.Format.FillWeight = 200F;
-            this.Format.HeaderText = "Format";
-            this.Format.Name = "Format";
-            this.Format.ReadOnly = true;
-            // 
             // gbTarget
             // 
             this.gbTarget.Controls.Add(this.cmbSolution);
@@ -504,6 +488,22 @@
             this.btnDelete.Text = "Delete attribute";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // Attribute
+            // 
+            this.Attribute.DataPropertyName = "Attribute";
+            this.Attribute.HeaderText = "Attribute";
+            this.Attribute.Name = "Attribute";
+            this.Attribute.ReadOnly = true;
+            this.Attribute.Width = 150;
+            // 
+            // Format
+            // 
+            this.Format.DataPropertyName = "Format";
+            this.Format.HeaderText = "Format";
+            this.Format.Name = "Format";
+            this.Format.ReadOnly = true;
+            this.Format.Width = 200;
             // 
             // AutoNumMgr
             // 
@@ -567,13 +567,13 @@
         private System.Windows.Forms.Button btnNew;
         private System.Windows.Forms.Label lblPrefix;
         private System.Windows.Forms.DataGridView gridAttributes;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Attribute;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Format;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtSeed;
         private System.Windows.Forms.ToolStripButton tsbFXB;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton tsbAbout;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Attribute;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Format;
     }
 }
