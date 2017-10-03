@@ -200,26 +200,29 @@
                 </h3>
                 <p>
                     <h4>Solution</h4>
-                    <img src="images/ANM.solution.jpg">
+                    <img src="images/ANM-solution.jpg">
                     <br />
                     The Solution dropdown will display all available unmanaged solutions in the system.<br/>
                     Select the solution in which to work with auto number attributes.<br/>
                     The prefix of the publisher of the solution will be used for new attributes created.
                     <br/><br/>
                     <h4>Entity</h4>
-                    <img src="images/ANM.entity.jpg">
+                    <img src="images/ANM-entity.jpg">
                     <br />
                     The Entity dropdown will display all entities included in the selected solution.<br/>
                     Select the entity for which to work with auto number attributes.
                     <br/><br/>
+                    <h4>New Attribute</h4>
+                    Click this button to create a new Auto Number attribute for the selected entity in the selected solution.
+                    <br/><br/>
                     <h4>Existing attributes</h4>
-                    <img src="images/ANM.attributes.jpg">
+                    <img src="images/ANM-attributes.jpg">
                     <br />
                     The table will display logical name and auto number format for existing auto number attributes on the selected entity.<br/>
                     Select an attribute to view the attribute properties, and to update properties or seed (next value to assign).
                     <br/><br/>
                     <h4>Attribute properties</h4>
-                    <img src="images/ANM.attribute.jpg">
+                    <img src="images/ANM-attribute.jpg">
                     <br />
                     This box contains all properties relevant to auto number attributes.
                     <ul>
@@ -246,6 +249,12 @@
                     		<li><strong>Sample Number</strong><br/>
                     		This field will show a sample of the generated auto number, based on the information given above.</li>
                     </ul>
+                    <h4>Create / Update</h4>
+                    Execute creation or update of the attribute with given properties.
+                    <br/><br/>
+                    <h4>Delete</h4>
+                    This will delete the attribute from the entity and data for existing records. This action is not possible to undo, data is LOST!
+                    <br/><br/>
                     <h4>Show data with FXB</h4>
                     Click this button to open <a href="http://fxb.xrmtoolbox.com">FetchXML Builder</a> with a query to get the last ten records for the selected entity, with primary name, created on, and any auto number attributes included.
                 </p>
