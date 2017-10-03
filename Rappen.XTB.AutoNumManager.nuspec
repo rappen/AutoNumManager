@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Rappen.XrmToolBox.AutoNumManager</id>
+    <version>1.0.0</version>
+    <title>Auto Number Manager for XrmToolBox</title>
+    <authors>Jonas Rapp, Innofactor Sweden</authors>
+    <owners>rappen</owners>
+    <projectUrl>http://anm.xrmtoolbox.com</projectUrl>
+    <iconUrl>http://anm.xrmtoolbox.com/images/ANM-150-transp.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>An XrmToolBox plugin to manage the Auto Number features introduced for Microsoft Dynamics 365 v9.0</description>
+    <summary>An XrmToolBox plugin to manage the Auto Number features introduced for Microsoft Dynamics 365 v9.0</summary>
+    <copyright>Copyright 2017 Jonas Rapp</copyright>
+    <tags>XrmToolBox Plugins AutoNumManager</tags>
+    <dependencies>
+      <dependency id="XrmToolBox" version="1.2017.10.1" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Rappen.XTB.AutoNumManager.dll" target="lib\net452\Plugins" />
+  </files>
+</package>
