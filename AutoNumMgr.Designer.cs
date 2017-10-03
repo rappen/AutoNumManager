@@ -41,6 +41,7 @@
             this.txtLogicalName = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.gbAttribute = new System.Windows.Forms.GroupBox();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.txtSeed = new System.Windows.Forms.TextBox();
             this.lblPrefix = new System.Windows.Forms.Label();
@@ -63,13 +64,13 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gbExisting = new System.Windows.Forms.GroupBox();
             this.gridAttributes = new System.Windows.Forms.DataGridView();
+            this.Attribute = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Format = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbTarget = new System.Windows.Forms.GroupBox();
             this.cmbSolution = new System.Windows.Forms.ComboBox();
             this.btnNew = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.Attribute = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Format = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtHint = new System.Windows.Forms.TextBox();
             this.toolStrip1.SuspendLayout();
             this.gbAttribute.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -114,8 +115,8 @@
             this.tsbFXB.Image = ((System.Drawing.Image)(resources.GetObject("tsbFXB.Image")));
             this.tsbFXB.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbFXB.Name = "tsbFXB";
-            this.tsbFXB.Size = new System.Drawing.Size(204, 22);
-            this.tsbFXB.Text = "Show data with FetchXML Builder";
+            this.tsbFXB.Size = new System.Drawing.Size(131, 22);
+            this.tsbFXB.Text = "Show data with FXB";
             this.tsbFXB.Click += new System.EventHandler(this.tsbFXB_Click);
             // 
             // tsbAbout
@@ -176,6 +177,7 @@
             // 
             // gbAttribute
             // 
+            this.gbAttribute.Controls.Add(this.txtHint);
             this.gbAttribute.Controls.Add(this.btnDelete);
             this.gbAttribute.Controls.Add(this.label9);
             this.gbAttribute.Controls.Add(this.txtSeed);
@@ -202,15 +204,27 @@
             this.gbAttribute.Enabled = false;
             this.gbAttribute.Location = new System.Drawing.Point(0, 0);
             this.gbAttribute.Name = "gbAttribute";
-            this.gbAttribute.Size = new System.Drawing.Size(437, 294);
+            this.gbAttribute.Size = new System.Drawing.Size(437, 342);
             this.gbAttribute.TabIndex = 2;
             this.gbAttribute.TabStop = false;
             this.gbAttribute.Text = "New Auto Numbered attribute";
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDelete.Enabled = false;
+            this.btnDelete.Location = new System.Drawing.Point(289, 307);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(134, 23);
+            this.btnDelete.TabIndex = 27;
+            this.btnDelete.Text = "Delete attribute";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 232);
+            this.label9.Location = new System.Drawing.Point(6, 206);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(32, 13);
             this.label9.TabIndex = 26;
@@ -218,7 +232,7 @@
             // 
             // txtSeed
             // 
-            this.txtSeed.Location = new System.Drawing.Point(106, 229);
+            this.txtSeed.Location = new System.Drawing.Point(106, 203);
             this.txtSeed.Name = "txtSeed";
             this.txtSeed.Size = new System.Drawing.Size(100, 20);
             this.txtSeed.TabIndex = 11;
@@ -270,7 +284,7 @@
             // 
             this.txtSample.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSample.Location = new System.Drawing.Point(106, 203);
+            this.txtSample.Location = new System.Drawing.Point(106, 229);
             this.txtSample.Name = "txtSample";
             this.txtSample.ReadOnly = true;
             this.txtSample.Size = new System.Drawing.Size(317, 20);
@@ -279,7 +293,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 206);
+            this.label3.Location = new System.Drawing.Point(6, 232);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(80, 13);
             this.label3.TabIndex = 19;
@@ -300,11 +314,12 @@
             this.txtLanguageId.Name = "txtLanguageId";
             this.txtLanguageId.Size = new System.Drawing.Size(100, 20);
             this.txtLanguageId.TabIndex = 5;
+            this.txtLanguageId.TextChanged += new System.EventHandler(this.txtLanguageId_TextChanged);
             // 
             // btnCreateUpdate
             // 
             this.btnCreateUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCreateUpdate.Location = new System.Drawing.Point(106, 259);
+            this.btnCreateUpdate.Location = new System.Drawing.Point(105, 307);
             this.btnCreateUpdate.Name = "btnCreateUpdate";
             this.btnCreateUpdate.Size = new System.Drawing.Size(134, 23);
             this.btnCreateUpdate.TabIndex = 12;
@@ -329,6 +344,7 @@
             this.txtMaxLen.Name = "txtMaxLen";
             this.txtMaxLen.Size = new System.Drawing.Size(100, 20);
             this.txtMaxLen.TabIndex = 4;
+            this.txtMaxLen.TextChanged += new System.EventHandler(this.txtMaxLen_TextChanged);
             // 
             // label7
             // 
@@ -430,6 +446,22 @@
             this.gridAttributes.TabIndex = 20;
             this.gridAttributes.SelectionChanged += new System.EventHandler(this.gridAttributes_SelectionChanged);
             // 
+            // Attribute
+            // 
+            this.Attribute.DataPropertyName = "Attribute";
+            this.Attribute.HeaderText = "Attribute";
+            this.Attribute.Name = "Attribute";
+            this.Attribute.ReadOnly = true;
+            this.Attribute.Width = 150;
+            // 
+            // Format
+            // 
+            this.Format.DataPropertyName = "Format";
+            this.Format.HeaderText = "Format";
+            this.Format.Name = "Format";
+            this.Format.ReadOnly = true;
+            this.Format.Width = 200;
+            // 
             // gbTarget
             // 
             this.gbTarget.Controls.Add(this.cmbSolution);
@@ -450,6 +482,7 @@
             this.cmbSolution.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbSolution.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSolution.Enabled = false;
             this.cmbSolution.FormattingEnabled = true;
             this.cmbSolution.Location = new System.Drawing.Point(106, 26);
             this.cmbSolution.Name = "cmbSolution";
@@ -460,6 +493,7 @@
             // btnNew
             // 
             this.btnNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNew.Enabled = false;
             this.btnNew.Location = new System.Drawing.Point(287, 79);
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new System.Drawing.Size(134, 23);
@@ -477,33 +511,20 @@
             this.label8.TabIndex = 3;
             this.label8.Text = "Solution";
             // 
-            // btnDelete
+            // txtHint
             // 
-            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDelete.Enabled = false;
-            this.btnDelete.Location = new System.Drawing.Point(289, 259);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(134, 23);
-            this.btnDelete.TabIndex = 27;
-            this.btnDelete.Text = "Delete attribute";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // Attribute
-            // 
-            this.Attribute.DataPropertyName = "Attribute";
-            this.Attribute.HeaderText = "Attribute";
-            this.Attribute.Name = "Attribute";
-            this.Attribute.ReadOnly = true;
-            this.Attribute.Width = 150;
-            // 
-            // Format
-            // 
-            this.Format.DataPropertyName = "Format";
-            this.Format.HeaderText = "Format";
-            this.Format.Name = "Format";
-            this.Format.ReadOnly = true;
-            this.Format.Width = 200;
+            this.txtHint.AcceptsReturn = true;
+            this.txtHint.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtHint.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtHint.Location = new System.Drawing.Point(106, 255);
+            this.txtHint.Multiline = true;
+            this.txtHint.Name = "txtHint";
+            this.txtHint.ReadOnly = true;
+            this.txtHint.Size = new System.Drawing.Size(317, 46);
+            this.txtHint.TabIndex = 28;
+            this.txtHint.TabStop = false;
             // 
             // AutoNumMgr
             // 
@@ -575,5 +596,6 @@
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.DataGridViewTextBoxColumn Attribute;
         private System.Windows.Forms.DataGridViewTextBoxColumn Format;
+        private System.Windows.Forms.TextBox txtHint;
     }
 }

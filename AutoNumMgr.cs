@@ -16,7 +16,7 @@ using System.Reflection;
 
 namespace Rappen.XTB.AutoNumManager
 {
-    public partial class AutoNumMgr : PluginControlBase, IStatusBarMessager, IMessageBusHost
+    public partial class AutoNumMgr : PluginControlBase, IStatusBarMessenger, IMessageBusHost
     {
         private Settings mySettings;
         private List<EntityMetadataProxy> entities;
@@ -58,6 +58,7 @@ namespace Rappen.XTB.AutoNumManager
             LogInfo("Connection has changed to: {0}", e.ConnectionDetail.WebApplicationUrl);
             gbAttribute.Enabled = false;
             tsbFXB.Enabled = false;
+            cmbSolution.Enabled = false;
             cmbEntities.Enabled = false;
             entities = new List<EntityMetadataProxy>();
             var orgver = new Version(e.ConnectionDetail.OrganizationVersion);
@@ -85,6 +86,7 @@ namespace Rappen.XTB.AutoNumManager
         private void LoadSolutions()
         {
             cmbSolution.Items.Clear();
+            cmbSolution.Enabled = false;
             WorkAsync(new WorkAsyncInfo("Loading entities...",
                 (eventargs) =>
                 {
@@ -113,6 +115,7 @@ namespace Rappen.XTB.AutoNumManager
                             var solutions = (EntityCollection)completedargs.Result;
                             var proxiedsolutions = solutions.Entities.Select(s => new SolutionProxy(s)).OrderBy(s => s.ToString());
                             cmbSolution.Items.AddRange(proxiedsolutions.ToArray());
+                            cmbSolution.Enabled = true;
                         }
                     }
                     EnableControls(true);
@@ -155,6 +158,7 @@ namespace Rappen.XTB.AutoNumManager
         private void FilterEntities()
         {
             cmbEntities.Items.Clear();
+            btnNew.Enabled = false;
             var solution = cmbSolution.SelectedItem as SolutionProxy;
             if (solution == null)
             {
@@ -232,7 +236,7 @@ namespace Rappen.XTB.AutoNumManager
 
         private void btnCreateUpdate_Click(object sender, EventArgs e)
         {
-            if (DialogResult.OK != MessageBox.Show("Confirm!", "Confirm", MessageBoxButtons.OKCancel))
+            if (DialogResult.OK != MessageBox.Show($"{btnCreateUpdate.Text} attibute.\nPlease confirm!", "Confirm", MessageBoxButtons.OKCancel))
             {
                 return;
             }
@@ -241,7 +245,7 @@ namespace Rappen.XTB.AutoNumManager
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (DialogResult.OK != MessageBox.Show("Confirm!", "Confirm", MessageBoxButtons.OKCancel))
+            if (DialogResult.OK != MessageBox.Show($"This will delete the attribute.\nAny data in existing records WILL be lost.\nThis is a one way ticket with no refund!\nDo you really want to delete attribute {lblPrefix.Text + txtLogicalName.Text}?", "Confirm delete", MessageBoxButtons.OKCancel))
             {
                 return;
             }
@@ -274,6 +278,13 @@ namespace Rappen.XTB.AutoNumManager
                     Attribute = attribute,
                     SolutionUniqueName = solutionname
                 };
+                if (!string.IsNullOrEmpty(seed))
+                {
+                    if (DialogResult.Yes != MessageBox.Show("Setting the seed for existing an attribute MAY result in duplicate data!\nDo you really want to change the seed?", "Confirm seed", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation))
+                    {
+                        return;
+                    }
+                }
             }
             else
             {
@@ -288,7 +299,7 @@ namespace Rappen.XTB.AutoNumManager
             (eventargs) =>
             {
                 Service.Execute(req);
-                if (!string.IsNullOrEmpty(seed) && seed != "1")
+                if (!string.IsNullOrEmpty(seed))
                 {
                     Service.Execute(new SetAutoNumberSeedRequest
                     {
@@ -366,23 +377,46 @@ CAS-{SEQNUM:6}-{DATETIMEUTC:yyyyMM}-{RANDSTRING:6}-{DATETIMEUTC:hhmmss}	    CAS-
             cmbEntities.Enabled = true;
             tsbFXB.Enabled = false;
             gbAttribute.Enabled = false;
+            gridAttributes.DataSource = null;
         }
 
         private void cmbEntities_SelectedIndexChanged(object sender, EventArgs e)
         {
-            gbAttribute.Enabled = cmbEntities.SelectedItem is EntityMetadataProxy;
-            tsbFXB.Enabled = cmbEntities.SelectedItem is EntityMetadataProxy;
+            var entityselected = cmbEntities.SelectedItem is EntityMetadataProxy;
+            gbAttribute.Enabled = false;
+            tsbFXB.Enabled = entityselected;
+            btnNew.Enabled = entityselected;
             LoadAttributes();
         }
 
         private void txtNumberFormat_TextChanged(object sender, EventArgs e)
         {
+            NumberConditionsChanged();
+        }
+
+        private void NumberConditionsChanged()
+        {
+            txtHint.Text = string.Empty;
+            if (!string.IsNullOrEmpty(txtSeed.Text) && !int.TryParse(txtSeed.Text, out int max))
+            {
+                txtHint.Text = $"Seed '{txtSeed.Text}' is not a valid number.";
+                return;
+            }
+            if (!int.TryParse(txtMaxLen.Text, out int maxlen))
+            {
+                txtHint.Text = $"Max Length '{txtMaxLen.Text}' is not a valid number.";
+                return;
+            }
             txtSample.Text = ParseNumberFormat(txtNumberFormat.Text, txtSeed.Text);
+            if (txtSample.Text.Length > maxlen)
+            {
+                txtHint.Text = "It looks like the maximum length of the attribute will be exceeded.\n\rCorrect this before saving the attribute.";
+            }
         }
 
         private void txtSeed_TextChanged(object sender, EventArgs e)
         {
-            txtSample.Text = ParseNumberFormat(txtNumberFormat.Text, txtSeed.Text);
+            NumberConditionsChanged();
         }
 
         private string ParseNumberFormat(string format, string seed)
@@ -392,13 +426,13 @@ CAS-{SEQNUM:6}-{DATETIMEUTC:yyyyMM}-{RANDSTRING:6}-{DATETIMEUTC:hhmmss}	    CAS-
                 format = ParseFormatSEQNUM(format, seed);
                 format = ParseFormatRANDSTRING(format);
                 format = ParseFormatDATETIMEUTC(format);
-                SendMessageToStatusBar(this, new StatusBarMessageEventArgs("Format successfully parsed"));
+                txtHint.Text = "Format successfully parsed.";
                 btnCreateUpdate.Enabled = true;
             }
             catch (Exception ex)
             {
-                SendMessageToStatusBar(this, new StatusBarMessageEventArgs(ex.Message));
-                format = $"Format error: {ex.Message}";
+                txtHint.Text = ex.Message;
+                format = string.Empty;
                 btnCreateUpdate.Enabled = false;
             }
             return format;
@@ -504,8 +538,8 @@ CAS-{SEQNUM:6}-{DATETIMEUTC:yyyyMM}-{RANDSTRING:6}-{DATETIMEUTC:hhmmss}	    CAS-
             txtDescription.Text = string.Empty;
             txtMaxLen.Text = "100";
             txtNumberFormat.Text = "{SEQNUM:5}";
-            txtSample.Text = ParseNumberFormat(txtNumberFormat.Text, "1");
             txtSeed.Text = string.Empty;
+            NumberConditionsChanged();
             btnCreateUpdate.Text = "Create";
             btnDelete.Enabled = false;
             gbAttribute.Enabled = true;
@@ -514,7 +548,7 @@ CAS-{SEQNUM:6}-{DATETIMEUTC:yyyyMM}-{RANDSTRING:6}-{DATETIMEUTC:hhmmss}	    CAS-
         private void gridAttributes_SelectionChanged(object sender, EventArgs e)
         {
             gbAttribute.Enabled = false;
-            SendMessageToStatusBar(this, new StatusBarMessageEventArgs(string.Empty));
+            txtHint.Text = string.Empty;
             var grid = sender as DataGridView;
             if (grid?.SelectedRows?.Count == 0)
             {
@@ -529,7 +563,7 @@ CAS-{SEQNUM:6}-{DATETIMEUTC:yyyyMM}-{RANDSTRING:6}-{DATETIMEUTC:hhmmss}	    CAS-
             var logical = attribute.Attribute;
             if (!logical.Contains("_"))
             {
-                SendMessageToStatusBar(this, new StatusBarMessageEventArgs("Attribute does not seem to be custom."));
+                txtHint.Text = "Attribute does not seem to be custom.";
                 return;
             }
             lblPrefix.Text = logical.Split('_')[0] + "_";
@@ -538,8 +572,8 @@ CAS-{SEQNUM:6}-{DATETIMEUTC:yyyyMM}-{RANDSTRING:6}-{DATETIMEUTC:hhmmss}	    CAS-
             txtDescription.Text = attribute.attributeMetadata.Description?.UserLocalizedLabel?.Label;
             txtMaxLen.Text = attribute.attributeMetadata.MaxLength?.ToString();
             txtNumberFormat.Text = attribute.attributeMetadata.AutoNumberFormat;
-            txtSample.Text = ParseNumberFormat(txtNumberFormat.Text, "1");
             txtSeed.Text = string.Empty;
+            NumberConditionsChanged();
             txtLogicalName.Enabled = false;
             btnCreateUpdate.Text = "Update";
             btnDelete.Enabled = true;
@@ -583,6 +617,21 @@ CAS-{SEQNUM:6}-{DATETIMEUTC:yyyyMM}-{RANDSTRING:6}-{DATETIMEUTC:hhmmss}	    CAS-
         public void OnIncomingMessage(MessageBusEventArgs message)
         {
             // This plugin does not accept incoming messages
+        }
+
+        private void txtMaxLen_TextChanged(object sender, EventArgs e)
+        {
+            NumberConditionsChanged();
+        }
+
+        private void txtLanguageId_TextChanged(object sender, EventArgs e)
+        {
+            txtHint.Text = string.Empty;
+            if (!int.TryParse(txtLanguageId.Text, out int max))
+            {
+                txtHint.Text = $"Language Id '{txtLanguageId.Text}' is not a valid number.";
+                return;
+            }
         }
     }
 }
