@@ -29,6 +29,22 @@ namespace Rappen.XTB.AutoNumManager
             InitializeComponent();
         }
 
+        internal void UpdateUI(Action action)
+        {
+            MethodInvoker mi = delegate
+            {
+                action();
+            };
+            if (InvokeRequired)
+            {
+                Invoke(mi);
+            }
+            else
+            {
+                mi();
+            }
+        }
+
         private void AutoNumMgr_Load(object sender, EventArgs e)
         {
             // Loads or creates the settings for the plugin
@@ -308,6 +324,7 @@ namespace Rappen.XTB.AutoNumManager
                         Value = int.Parse(seed)
                     });
                 }
+                UpdateUI(LoadAttributes);
             })
             {
                 PostWorkCallBack = (completedargs) =>
@@ -348,7 +365,7 @@ namespace Rappen.XTB.AutoNumManager
                     else
                     {
                         MessageBox.Show("Attribute deleted!");
-                        LoadAttributes();
+                        UpdateUI(LoadAttributes);
                     }
                 }
             });

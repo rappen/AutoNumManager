@@ -207,7 +207,7 @@
             this.gbAttribute.Size = new System.Drawing.Size(437, 342);
             this.gbAttribute.TabIndex = 2;
             this.gbAttribute.TabStop = false;
-            this.gbAttribute.Text = "New Auto Numbered attribute";
+            this.gbAttribute.Text = "Auto Numbered attribute";
             // 
             // btnDelete
             // 
