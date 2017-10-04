@@ -26,7 +26,10 @@
         var GH_USER = "Rappen";
         var GH_REPO = "AutoNumManager";
         var NUGET_PACKAGE = "Rappen.XrmToolBox.AutoNumManager";
+        var nugetInfo = null;
+        var githubInfo = null;
         var nugetLoading = false;
+        var githubLoading = false;
         var versionInfo = null;
 
         var releasenotesshowing = false;
@@ -43,6 +46,8 @@
 
         UpdateRelease = function () {
             if (!nugetLoading) {
+                nugetInfo = null;
+                githubInfo = null;
                 nugetLoading = true;
                 $("#latest-version").text("Loading stats...");
                 $("#latest-published").text("...from NuGet");
@@ -57,9 +62,27 @@
         }
 
         NuGetInfoRetrieved = function (info) {
-            versionInfo = info;
-            PrintVersionInfo(versionInfo);
+            nugetInfo = info;
+            if (githubInfo) {
+                var details = CombineDetails(nugetInfo, githubInfo, true);
+                PrintVersionInfo(details);
+            }
+            else if (!githubLoading) {
+                githubLoading = true;
+                $("#latest-version").text("Loading stats...");
+                $("#latest-published").text("...from GitHub");
+                GitHubGetDetails(GH_USER, GH_REPO, GitHubInfoRetrieved, InfoLoadError);
+            }
             nugetLoading = false;
+        }
+
+        GitHubInfoRetrieved = function (info) {
+            githubInfo = info;
+            if (nugetInfo) {
+                versionInfo = CombineDetails(nugetInfo, githubInfo, true);
+                PrintVersionInfo(versionInfo);
+            }
+            githubLoading = false;
         }
 
         InfoLoadError = function (xhr, options, error) {
@@ -111,7 +134,7 @@
                 var count = this.downloads;
                 counttext = tag + " <strong>" + count.padLeft(5, '&nbsp;') + "</strong>" + date + "<br/>" + counttext;
             });
-            counttext = "<u>Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Count&nbsp;&nbsp;Released</u><br />" + counttext;
+            counttext = "<u>Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Count&nbsp;&nbsp;Released&nbsp;&nbsp;</u><br />" + counttext;
             $("#hist-downloads").html(counttext);
             if (callback) {
                 callback();
