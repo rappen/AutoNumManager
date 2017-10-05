@@ -18,7 +18,7 @@ namespace Rappen.XTB.AutoNumManager
 {
     public partial class AutoNumMgr : PluginControlBase, IStatusBarMessenger, IMessageBusHost
     {
-        private Settings mySettings;
+        private Settings settings;
         private List<EntityMetadataProxy> entities;
 
         public event EventHandler<StatusBarMessageEventArgs> SendMessageToStatusBar;
@@ -45,32 +45,47 @@ namespace Rappen.XTB.AutoNumManager
             }
         }
 
+        internal void LogUse(string action, bool forceLog = false)
+        {
+            if (settings.UseLog == true || forceLog)
+            {
+                LogUsage.DoLog(action);
+            }
+        }
+
         private void AutoNumMgr_Load(object sender, EventArgs e)
         {
             // Loads or creates the settings for the plugin
-            if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
+            if (!SettingsManager.Instance.TryLoad(GetType(), out settings))
             {
-                mySettings = new Settings();
+                settings = new Settings();
                 LogWarning("Settings not found => created");
             }
             else
             {
-                mySettings = new Settings();
                 LogInfo("Settings found and loaded");
             }
+            var ass = Assembly.GetExecutingAssembly().GetName();
+            var version = ass.Version.ToString();
+            if (!version.Equals(settings.Version))
+            {
+                // Reset some settings when new version is deployed
+                settings.UseLog = null;
+            }
+            if (settings.UseLog == null)
+            {
+                settings.UseLog = LogUsage.PromptToLog();
+            }
+            settings.Version = version;
         }
 
         private void AutoNumMgr_OnCloseTool(object sender, EventArgs e)
         {
-            SettingsManager.Instance.Save(GetType(), mySettings);
+            SettingsManager.Instance.Save(GetType(), settings);
         }
 
         private void AutoNumMgr_ConnectionUpdated(object sender, ConnectionUpdatedEventArgs e)
         {
-            if (mySettings != null)
-            {
-                mySettings.LastUsedOrganizationWebappUrl = e.ConnectionDetail.WebApplicationUrl;
-            }
             LogInfo("Connection has changed to: {0}", e.ConnectionDetail.WebApplicationUrl);
             gbAttribute.Enabled = false;
             tsbFXB.Enabled = false;
@@ -232,7 +247,11 @@ namespace Rappen.XTB.AutoNumManager
                             .Select(a => new AttributeProxy((StringAttributeMetadata)a)).ToList();
                           var bindingList = new BindingList<AttributeProxy>(attributes);
                           var source = new BindingSource(bindingList, null);
-                          gridAttributes.DataSource = source;
+                          UpdateUI(() =>
+                          {
+                              gridAttributes.DataSource = source;
+                              gridAttributes.Enabled = true;
+                          });
                       }
                   }
             });
@@ -301,6 +320,7 @@ namespace Rappen.XTB.AutoNumManager
                         return;
                     }
                 }
+                LogUse($"UpdateAttribute:{attribute.AutoNumberFormat}");
             }
             else
             {
@@ -310,6 +330,7 @@ namespace Rappen.XTB.AutoNumManager
                     Attribute = attribute,
                     SolutionUniqueName = solutionname
                 };
+                LogUse($"CreateAttribute:{attribute.AutoNumberFormat}");
             }
             WorkAsync(new WorkAsyncInfo("Saving attribute...",
             (eventargs) =>
@@ -317,6 +338,7 @@ namespace Rappen.XTB.AutoNumManager
                 Service.Execute(req);
                 if (!string.IsNullOrEmpty(seed))
                 {
+                    LogUse($"SetSeed:{seed}");
                     Service.Execute(new SetAutoNumberSeedRequest
                     {
                         EntityName = entityname,
@@ -353,6 +375,7 @@ namespace Rappen.XTB.AutoNumManager
             WorkAsync(new WorkAsyncInfo("Deleting attribute...",
             (eventargs) =>
             {
+                LogUse("DeleteAttribute");
                 Service.Execute(req);
             })
             {
@@ -393,6 +416,7 @@ CAS-{SEQNUM:6}-{DATETIMEUTC:yyyyMM}-{RANDSTRING:6}-{DATETIMEUTC:hhmmss}	    CAS-
             FilterEntities();
             cmbEntities.Enabled = true;
             tsbFXB.Enabled = false;
+            gridAttributes.Enabled = false;
             gbAttribute.Enabled = false;
             gridAttributes.DataSource = null;
         }
@@ -400,6 +424,7 @@ CAS-{SEQNUM:6}-{DATETIMEUTC:yyyyMM}-{RANDSTRING:6}-{DATETIMEUTC:hhmmss}	    CAS-
         private void cmbEntities_SelectedIndexChanged(object sender, EventArgs e)
         {
             var entityselected = cmbEntities.SelectedItem is EntityMetadataProxy;
+            gridAttributes.Enabled = false;
             gbAttribute.Enabled = false;
             tsbFXB.Enabled = entityselected;
             btnNew.Enabled = entityselected;
@@ -624,11 +649,24 @@ CAS-{SEQNUM:6}-{DATETIMEUTC:yyyyMM}-{RANDSTRING:6}-{DATETIMEUTC:hhmmss}	    CAS-
 
         private void tsbAbout_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "Auto Number Manager for XrmToolBox\n" +
-                "Version: " + Assembly.GetExecutingAssembly().GetName().Version + "\n\n" +
-                "Developed by Jonas Rapp at Innofactor Sweden.",
-                "About Auto Number Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            LogUse("OpenAbout");
+            var about = new About(this);
+            about.StartPosition = FormStartPosition.CenterParent;
+            about.lblVersion.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            about.chkStatAllow.Checked = settings.UseLog != false;
+            about.ShowDialog();
+            if (settings.UseLog != about.chkStatAllow.Checked)
+            {
+                settings.UseLog = about.chkStatAllow.Checked;
+                if (settings.UseLog == true)
+                {
+                    LogUse("Accept", true);
+                }
+                else if (settings.UseLog == false)
+                {
+                    LogUse("Deny", true);
+                }
+            }
         }
 
         public void OnIncomingMessage(MessageBusEventArgs message)

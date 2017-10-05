@@ -126,7 +126,7 @@
             this.tsbAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbAbout.Name = "tsbAbout";
             this.tsbAbout.Size = new System.Drawing.Size(91, 22);
-            this.tsbAbout.Text = "About ANM";
+            this.tsbAbout.Text = "About";
             this.tsbAbout.Click += new System.EventHandler(this.tsbAbout_Click);
             // 
             // label1
@@ -439,6 +439,7 @@
             this.gridAttributes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Attribute,
             this.Format});
+            this.gridAttributes.Enabled = false;
             this.gridAttributes.Location = new System.Drawing.Point(9, 22);
             this.gridAttributes.Name = "gridAttributes";
             this.gridAttributes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;

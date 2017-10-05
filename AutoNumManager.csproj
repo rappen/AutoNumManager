@@ -101,6 +101,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="About.designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
     <Compile Include="AttributeProxy.cs" />
     <Compile Include="AutoNumMgr.cs">
       <SubType>UserControl</SubType>
@@ -109,6 +115,7 @@
       <DependentUpon>AutoNumMgr.cs</DependentUpon>
     </Compile>
     <Compile Include="EntityMetadataProxy.cs" />
+    <Compile Include="LogUsage.cs" />
     <Compile Include="MetadataHelper.cs" />
     <Compile Include="PluginInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -125,6 +132,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AutoNumMgr.resx">
       <DependentUpon>AutoNumMgr.cs</DependentUpon>
     </EmbeddedResource>
