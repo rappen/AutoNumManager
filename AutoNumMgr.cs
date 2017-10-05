@@ -16,10 +16,20 @@ using System.Reflection;
 
 namespace Rappen.XTB.AutoNumManager
 {
-    public partial class AutoNumMgr : PluginControlBase, IStatusBarMessenger, IMessageBusHost
+    public partial class AutoNumMgr : PluginControlBase, IStatusBarMessenger, IMessageBusHost, IGitHubPlugin, IPayPalPlugin, IHelpPlugin
     {
         private Settings settings;
         private List<EntityMetadataProxy> entities;
+
+        public string RepositoryName { get { return "AutoNumManager"; } }
+
+        public string UserName { get { return "Rappen"; } }
+
+        public string DonationDescription { get { return "Auto Number Manager Fan Club"; } }
+
+        public string EmailAccount { get { return "jonas@rappen.net"; } }
+
+        public string HelpUrl { get { return "http://anm.xrmtoolbox.com"; } }
 
         public event EventHandler<StatusBarMessageEventArgs> SendMessageToStatusBar;
         public event EventHandler<MessageBusEventArgs> OnOutgoingMessage;
@@ -77,11 +87,14 @@ namespace Rappen.XTB.AutoNumManager
                 settings.UseLog = LogUsage.PromptToLog();
             }
             settings.Version = version;
+            LogUse("Load");
         }
 
-        private void AutoNumMgr_OnCloseTool(object sender, EventArgs e)
+        public override void ClosingPlugin(PluginCloseInfo info)
         {
             SettingsManager.Instance.Save(GetType(), settings);
+            LogUse("Close");
+            base.ClosingPlugin(info);
         }
 
         private void AutoNumMgr_ConnectionUpdated(object sender, ConnectionUpdatedEventArgs e)
