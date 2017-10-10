@@ -43,6 +43,7 @@ namespace Rappen.XTB.AutoNumManager
             this.txtLogicalName = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.gbAttribute = new System.Windows.Forms.GroupBox();
+            this.txtHint = new System.Windows.Forms.TextBox();
             this.btnDelete = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.txtSeed = new System.Windows.Forms.TextBox();
@@ -72,7 +73,6 @@ namespace Rappen.XTB.AutoNumManager
             this.cmbSolution = new System.Windows.Forms.ComboBox();
             this.btnNew = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
-            this.txtHint = new System.Windows.Forms.TextBox();
             this.toolStrip1.SuspendLayout();
             this.gbAttribute.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -127,7 +127,7 @@ namespace Rappen.XTB.AutoNumManager
             this.tsbAbout.Image = ((System.Drawing.Image)(resources.GetObject("tsbAbout.Image")));
             this.tsbAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbAbout.Name = "tsbAbout";
-            this.tsbAbout.Size = new System.Drawing.Size(91, 22);
+            this.tsbAbout.Size = new System.Drawing.Size(60, 22);
             this.tsbAbout.Text = "About";
             this.tsbAbout.Click += new System.EventHandler(this.tsbAbout_Click);
             // 
@@ -210,6 +210,21 @@ namespace Rappen.XTB.AutoNumManager
             this.gbAttribute.TabIndex = 2;
             this.gbAttribute.TabStop = false;
             this.gbAttribute.Text = "Auto Numbered attribute";
+            // 
+            // txtHint
+            // 
+            this.txtHint.AcceptsReturn = true;
+            this.txtHint.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtHint.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtHint.Location = new System.Drawing.Point(106, 255);
+            this.txtHint.Multiline = true;
+            this.txtHint.Name = "txtHint";
+            this.txtHint.ReadOnly = true;
+            this.txtHint.Size = new System.Drawing.Size(317, 46);
+            this.txtHint.TabIndex = 28;
+            this.txtHint.TabStop = false;
             // 
             // btnDelete
             // 
@@ -514,21 +529,6 @@ namespace Rappen.XTB.AutoNumManager
             this.label8.TabIndex = 3;
             this.label8.Text = "Solution";
             // 
-            // txtHint
-            // 
-            this.txtHint.AcceptsReturn = true;
-            this.txtHint.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtHint.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtHint.Location = new System.Drawing.Point(106, 255);
-            this.txtHint.Multiline = true;
-            this.txtHint.Name = "txtHint";
-            this.txtHint.ReadOnly = true;
-            this.txtHint.Size = new System.Drawing.Size(317, 46);
-            this.txtHint.TabIndex = 28;
-            this.txtHint.TabStop = false;
-            // 
             // AutoNumMgr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -537,6 +537,7 @@ namespace Rappen.XTB.AutoNumManager
             this.Controls.Add(this.toolStrip1);
             this.Name = "AutoNumMgr";
             this.Size = new System.Drawing.Size(870, 577);
+            this.TabIcon = ((System.Drawing.Image)(resources.GetObject("$this.TabIcon")));
             this.ConnectionUpdated += new XrmToolBox.Extensibility.PluginControlBase.ConnectionUpdatedHandler(this.AutoNumMgr_ConnectionUpdated);
             this.Load += new System.EventHandler(this.AutoNumMgr_Load);
             this.toolStrip1.ResumeLayout(false);
