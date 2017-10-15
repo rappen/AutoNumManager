@@ -644,7 +644,7 @@ namespace Rappen.XTB.AutoNumManager
             this.Controls.Add(this.toolStrip1);
             this.Name = "AutoNumMgr";
             this.Size = new System.Drawing.Size(870, 577);
-            this.TabIcon = ((System.Drawing.Image)(resources.GetObject("$this.TabIcon")));
+            //this.TabIcon = ((System.Drawing.Image)(resources.GetObject("$this.TabIcon")));
             this.ConnectionUpdated += new XrmToolBox.Extensibility.PluginControlBase.ConnectionUpdatedHandler(this.AutoNumMgr_ConnectionUpdated);
             this.Load += new System.EventHandler(this.AutoNumMgr_Load);
             this.toolStrip1.ResumeLayout(false);
