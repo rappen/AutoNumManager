@@ -32,6 +32,9 @@ namespace Rappen.XTB.AutoNumManager
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AutoNumMgr));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbClose = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -43,6 +46,9 @@ namespace Rappen.XTB.AutoNumManager
             this.txtLogicalName = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.gbAttribute = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.chkAllowNoSeqNo = new System.Windows.Forms.CheckBox();
+            this.btnGuessSeed = new System.Windows.Forms.Button();
             this.txtHint = new System.Windows.Forms.TextBox();
             this.btnDelete = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
@@ -66,13 +72,16 @@ namespace Rappen.XTB.AutoNumManager
             this.label4 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gbExisting = new System.Windows.Forms.GroupBox();
+            this.rbShowAttributesAllString = new System.Windows.Forms.RadioButton();
+            this.rbShowAttributesOnlyNumber = new System.Windows.Forms.RadioButton();
             this.gridAttributes = new System.Windows.Forms.DataGridView();
-            this.Attribute = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Format = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbTarget = new System.Windows.Forms.GroupBox();
             this.cmbSolution = new System.Windows.Forms.ComboBox();
             this.btnNew = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
+            this.Attribute = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DisplayName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Format = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             this.gbAttribute.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -149,7 +158,7 @@ namespace Rappen.XTB.AutoNumManager
             this.cmbEntities.FormattingEnabled = true;
             this.cmbEntities.Location = new System.Drawing.Point(106, 52);
             this.cmbEntities.Name = "cmbEntities";
-            this.cmbEntities.Size = new System.Drawing.Size(314, 21);
+            this.cmbEntities.Size = new System.Drawing.Size(361, 21);
             this.cmbEntities.TabIndex = 2;
             this.cmbEntities.SelectedIndexChanged += new System.EventHandler(this.cmbEntities_SelectedIndexChanged);
             // 
@@ -169,7 +178,7 @@ namespace Rappen.XTB.AutoNumManager
             this.txtLogicalName.Enabled = false;
             this.txtLogicalName.Location = new System.Drawing.Point(160, 26);
             this.txtLogicalName.Name = "txtLogicalName";
-            this.txtLogicalName.Size = new System.Drawing.Size(263, 20);
+            this.txtLogicalName.Size = new System.Drawing.Size(216, 20);
             this.txtLogicalName.TabIndex = 1;
             // 
             // contextMenuStrip1
@@ -179,6 +188,9 @@ namespace Rappen.XTB.AutoNumManager
             // 
             // gbAttribute
             // 
+            this.gbAttribute.Controls.Add(this.label10);
+            this.gbAttribute.Controls.Add(this.chkAllowNoSeqNo);
+            this.gbAttribute.Controls.Add(this.btnGuessSeed);
             this.gbAttribute.Controls.Add(this.txtHint);
             this.gbAttribute.Controls.Add(this.btnDelete);
             this.gbAttribute.Controls.Add(this.label9);
@@ -202,27 +214,57 @@ namespace Rappen.XTB.AutoNumManager
             this.gbAttribute.Controls.Add(this.label4);
             this.gbAttribute.Controls.Add(this.txtLogicalName);
             this.gbAttribute.Controls.Add(this.label2);
-            this.gbAttribute.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbAttribute.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbAttribute.Enabled = false;
             this.gbAttribute.Location = new System.Drawing.Point(0, 0);
             this.gbAttribute.Name = "gbAttribute";
-            this.gbAttribute.Size = new System.Drawing.Size(437, 342);
+            this.gbAttribute.Size = new System.Drawing.Size(390, 552);
             this.gbAttribute.TabIndex = 2;
             this.gbAttribute.TabStop = false;
             this.gbAttribute.Text = "Auto Numbered attribute";
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 201);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(56, 13);
+            this.label10.TabIndex = 31;
+            this.label10.Text = "Advanced";
+            // 
+            // chkAllowNoSeqNo
+            // 
+            this.chkAllowNoSeqNo.AutoSize = true;
+            this.chkAllowNoSeqNo.Location = new System.Drawing.Point(106, 200);
+            this.chkAllowNoSeqNo.Name = "chkAllowNoSeqNo";
+            this.chkAllowNoSeqNo.Size = new System.Drawing.Size(136, 17);
+            this.chkAllowNoSeqNo.TabIndex = 10;
+            this.chkAllowNoSeqNo.Text = "Don\'t require SEQNUM";
+            this.chkAllowNoSeqNo.UseVisualStyleBackColor = true;
+            this.chkAllowNoSeqNo.CheckedChanged += new System.EventHandler(this.chkAllowNoSeqNo_CheckedChanged);
+            // 
+            // btnGuessSeed
+            // 
+            this.btnGuessSeed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnGuessSeed.Location = new System.Drawing.Point(242, 227);
+            this.btnGuessSeed.Name = "btnGuessSeed";
+            this.btnGuessSeed.Size = new System.Drawing.Size(134, 23);
+            this.btnGuessSeed.TabIndex = 12;
+            this.btnGuessSeed.Text = "Guess current SEQNUM";
+            this.btnGuessSeed.UseVisualStyleBackColor = true;
+            this.btnGuessSeed.Click += new System.EventHandler(this.btnGuessSeed_Click);
+            // 
             // txtHint
             // 
             this.txtHint.AcceptsReturn = true;
-            this.txtHint.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtHint.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtHint.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtHint.Location = new System.Drawing.Point(106, 255);
+            this.txtHint.Location = new System.Drawing.Point(106, 281);
             this.txtHint.Multiline = true;
             this.txtHint.Name = "txtHint";
             this.txtHint.ReadOnly = true;
-            this.txtHint.Size = new System.Drawing.Size(317, 46);
+            this.txtHint.Size = new System.Drawing.Size(270, 37);
             this.txtHint.TabIndex = 28;
             this.txtHint.TabStop = false;
             // 
@@ -230,10 +272,10 @@ namespace Rappen.XTB.AutoNumManager
             // 
             this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDelete.Enabled = false;
-            this.btnDelete.Location = new System.Drawing.Point(289, 307);
+            this.btnDelete.Location = new System.Drawing.Point(242, 519);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(134, 23);
-            this.btnDelete.TabIndex = 27;
+            this.btnDelete.TabIndex = 15;
             this.btnDelete.Text = "Delete attribute";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -241,7 +283,7 @@ namespace Rappen.XTB.AutoNumManager
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 206);
+            this.label9.Location = new System.Drawing.Point(6, 232);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(32, 13);
             this.label9.TabIndex = 26;
@@ -249,7 +291,8 @@ namespace Rappen.XTB.AutoNumManager
             // 
             // txtSeed
             // 
-            this.txtSeed.Location = new System.Drawing.Point(106, 203);
+            this.txtSeed.Enabled = false;
+            this.txtSeed.Location = new System.Drawing.Point(106, 229);
             this.txtSeed.Name = "txtSeed";
             this.txtSeed.Size = new System.Drawing.Size(100, 20);
             this.txtSeed.TabIndex = 11;
@@ -267,7 +310,7 @@ namespace Rappen.XTB.AutoNumManager
             // llRandom
             // 
             this.llRandom.AutoSize = true;
-            this.llRandom.Location = new System.Drawing.Point(256, 183);
+            this.llRandom.Location = new System.Drawing.Point(256, 181);
             this.llRandom.Name = "llRandom";
             this.llRandom.Size = new System.Drawing.Size(79, 13);
             this.llRandom.TabIndex = 9;
@@ -278,7 +321,7 @@ namespace Rappen.XTB.AutoNumManager
             // llDatetime
             // 
             this.llDatetime.AutoSize = true;
-            this.llDatetime.Location = new System.Drawing.Point(166, 183);
+            this.llDatetime.Location = new System.Drawing.Point(166, 181);
             this.llDatetime.Name = "llDatetime";
             this.llDatetime.Size = new System.Drawing.Size(84, 13);
             this.llDatetime.TabIndex = 8;
@@ -289,7 +332,7 @@ namespace Rappen.XTB.AutoNumManager
             // llSeqnum
             // 
             this.llSeqnum.AutoSize = true;
-            this.llSeqnum.Location = new System.Drawing.Point(106, 183);
+            this.llSeqnum.Location = new System.Drawing.Point(106, 181);
             this.llSeqnum.Name = "llSeqnum";
             this.llSeqnum.Size = new System.Drawing.Size(54, 13);
             this.llSeqnum.TabIndex = 7;
@@ -301,16 +344,16 @@ namespace Rappen.XTB.AutoNumManager
             // 
             this.txtSample.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSample.Location = new System.Drawing.Point(106, 229);
+            this.txtSample.Location = new System.Drawing.Point(106, 255);
             this.txtSample.Name = "txtSample";
             this.txtSample.ReadOnly = true;
-            this.txtSample.Size = new System.Drawing.Size(317, 20);
-            this.txtSample.TabIndex = 10;
+            this.txtSample.Size = new System.Drawing.Size(270, 20);
+            this.txtSample.TabIndex = 13;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 232);
+            this.label3.Location = new System.Drawing.Point(6, 258);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(80, 13);
             this.label3.TabIndex = 19;
@@ -336,10 +379,10 @@ namespace Rappen.XTB.AutoNumManager
             // btnCreateUpdate
             // 
             this.btnCreateUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCreateUpdate.Location = new System.Drawing.Point(105, 307);
+            this.btnCreateUpdate.Location = new System.Drawing.Point(106, 519);
             this.btnCreateUpdate.Name = "btnCreateUpdate";
             this.btnCreateUpdate.Size = new System.Drawing.Size(134, 23);
-            this.btnCreateUpdate.TabIndex = 12;
+            this.btnCreateUpdate.TabIndex = 14;
             this.btnCreateUpdate.Text = "Create attribute";
             this.btnCreateUpdate.UseVisualStyleBackColor = true;
             this.btnCreateUpdate.Click += new System.EventHandler(this.btnCreateUpdate_Click);
@@ -378,7 +421,7 @@ namespace Rappen.XTB.AutoNumManager
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNumberFormat.Location = new System.Drawing.Point(106, 156);
             this.txtNumberFormat.Name = "txtNumberFormat";
-            this.txtNumberFormat.Size = new System.Drawing.Size(317, 20);
+            this.txtNumberFormat.Size = new System.Drawing.Size(270, 20);
             this.txtNumberFormat.TabIndex = 6;
             this.txtNumberFormat.TextChanged += new System.EventHandler(this.txtNumberFormat_TextChanged);
             // 
@@ -388,7 +431,7 @@ namespace Rappen.XTB.AutoNumManager
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDescription.Location = new System.Drawing.Point(106, 78);
             this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(317, 20);
+            this.txtDescription.Size = new System.Drawing.Size(270, 20);
             this.txtDescription.TabIndex = 3;
             // 
             // label5
@@ -406,7 +449,7 @@ namespace Rappen.XTB.AutoNumManager
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDisplayName.Location = new System.Drawing.Point(106, 52);
             this.txtDisplayName.Name = "txtDisplayName";
-            this.txtDisplayName.Size = new System.Drawing.Size(317, 20);
+            this.txtDisplayName.Size = new System.Drawing.Size(270, 20);
             this.txtDisplayName.TabIndex = 2;
             // 
             // label4
@@ -433,64 +476,101 @@ namespace Rappen.XTB.AutoNumManager
             // 
             this.splitContainer1.Panel2.Controls.Add(this.gbAttribute);
             this.splitContainer1.Size = new System.Drawing.Size(870, 552);
-            this.splitContainer1.SplitterDistance = 429;
+            this.splitContainer1.SplitterDistance = 476;
             this.splitContainer1.TabIndex = 7;
             // 
             // gbExisting
             // 
+            this.gbExisting.Controls.Add(this.rbShowAttributesAllString);
+            this.gbExisting.Controls.Add(this.btnNew);
+            this.gbExisting.Controls.Add(this.rbShowAttributesOnlyNumber);
             this.gbExisting.Controls.Add(this.gridAttributes);
             this.gbExisting.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbExisting.Location = new System.Drawing.Point(0, 111);
+            this.gbExisting.Location = new System.Drawing.Point(0, 83);
             this.gbExisting.Name = "gbExisting";
-            this.gbExisting.Size = new System.Drawing.Size(429, 441);
+            this.gbExisting.Size = new System.Drawing.Size(476, 469);
             this.gbExisting.TabIndex = 3;
             this.gbExisting.TabStop = false;
-            this.gbExisting.Text = "Existing Auto Number attributes";
+            this.gbExisting.Text = "Existing Text attributes";
+            // 
+            // rbShowAttributesAllString
+            // 
+            this.rbShowAttributesAllString.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rbShowAttributesAllString.AutoSize = true;
+            this.rbShowAttributesAllString.Location = new System.Drawing.Point(328, 22);
+            this.rbShowAttributesAllString.Name = "rbShowAttributesAllString";
+            this.rbShowAttributesAllString.Size = new System.Drawing.Size(139, 17);
+            this.rbShowAttributesAllString.TabIndex = 2;
+            this.rbShowAttributesAllString.Text = "Show all string attributes";
+            this.rbShowAttributesAllString.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.rbShowAttributesAllString.UseVisualStyleBackColor = true;
+            this.rbShowAttributesAllString.CheckedChanged += new System.EventHandler(this.rbShowAttributes_CheckedChanged);
+            // 
+            // rbShowAttributesOnlyNumber
+            // 
+            this.rbShowAttributesOnlyNumber.AutoSize = true;
+            this.rbShowAttributesOnlyNumber.Checked = true;
+            this.rbShowAttributesOnlyNumber.Location = new System.Drawing.Point(9, 22);
+            this.rbShowAttributesOnlyNumber.Name = "rbShowAttributesOnlyNumber";
+            this.rbShowAttributesOnlyNumber.Size = new System.Drawing.Size(182, 17);
+            this.rbShowAttributesOnlyNumber.TabIndex = 1;
+            this.rbShowAttributesOnlyNumber.TabStop = true;
+            this.rbShowAttributesOnlyNumber.Text = "Only show auto number attributes";
+            this.rbShowAttributesOnlyNumber.UseVisualStyleBackColor = true;
+            this.rbShowAttributesOnlyNumber.CheckedChanged += new System.EventHandler(this.rbShowAttributes_CheckedChanged);
             // 
             // gridAttributes
             // 
             this.gridAttributes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridAttributes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.gridAttributes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridAttributes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Attribute,
+            this.DisplayName,
             this.Format});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridAttributes.DefaultCellStyle = dataGridViewCellStyle2;
             this.gridAttributes.Enabled = false;
-            this.gridAttributes.Location = new System.Drawing.Point(9, 22);
+            this.gridAttributes.Location = new System.Drawing.Point(9, 48);
             this.gridAttributes.Name = "gridAttributes";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridAttributes.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.gridAttributes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridAttributes.Size = new System.Drawing.Size(411, 413);
-            this.gridAttributes.TabIndex = 20;
+            this.gridAttributes.Size = new System.Drawing.Size(458, 382);
+            this.gridAttributes.TabIndex = 3;
             this.gridAttributes.SelectionChanged += new System.EventHandler(this.gridAttributes_SelectionChanged);
-            // 
-            // Attribute
-            // 
-            this.Attribute.DataPropertyName = "Attribute";
-            this.Attribute.HeaderText = "Attribute";
-            this.Attribute.Name = "Attribute";
-            this.Attribute.ReadOnly = true;
-            this.Attribute.Width = 150;
-            // 
-            // Format
-            // 
-            this.Format.DataPropertyName = "Format";
-            this.Format.HeaderText = "Format";
-            this.Format.Name = "Format";
-            this.Format.ReadOnly = true;
-            this.Format.Width = 200;
             // 
             // gbTarget
             // 
             this.gbTarget.Controls.Add(this.cmbSolution);
-            this.gbTarget.Controls.Add(this.btnNew);
             this.gbTarget.Controls.Add(this.label8);
             this.gbTarget.Controls.Add(this.cmbEntities);
             this.gbTarget.Controls.Add(this.label1);
             this.gbTarget.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbTarget.Location = new System.Drawing.Point(0, 0);
             this.gbTarget.Name = "gbTarget";
-            this.gbTarget.Size = new System.Drawing.Size(429, 111);
+            this.gbTarget.Size = new System.Drawing.Size(476, 83);
             this.gbTarget.TabIndex = 1;
             this.gbTarget.TabStop = false;
             this.gbTarget.Text = "Target";
@@ -504,18 +584,18 @@ namespace Rappen.XTB.AutoNumManager
             this.cmbSolution.FormattingEnabled = true;
             this.cmbSolution.Location = new System.Drawing.Point(106, 26);
             this.cmbSolution.Name = "cmbSolution";
-            this.cmbSolution.Size = new System.Drawing.Size(314, 21);
+            this.cmbSolution.Size = new System.Drawing.Size(361, 21);
             this.cmbSolution.TabIndex = 1;
             this.cmbSolution.SelectedIndexChanged += new System.EventHandler(this.cmbSolution_SelectedIndexChanged);
             // 
             // btnNew
             // 
-            this.btnNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNew.Enabled = false;
-            this.btnNew.Location = new System.Drawing.Point(287, 79);
+            this.btnNew.Location = new System.Drawing.Point(333, 436);
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new System.Drawing.Size(134, 23);
-            this.btnNew.TabIndex = 19;
+            this.btnNew.TabIndex = 4;
             this.btnNew.Text = "New Attribute";
             this.btnNew.UseVisualStyleBackColor = true;
             this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
@@ -528,6 +608,33 @@ namespace Rappen.XTB.AutoNumManager
             this.label8.Size = new System.Drawing.Size(45, 13);
             this.label8.TabIndex = 3;
             this.label8.Text = "Solution";
+            // 
+            // Attribute
+            // 
+            this.Attribute.DataPropertyName = "LogicalName";
+            this.Attribute.HeaderText = "Logical Name";
+            this.Attribute.Name = "Attribute";
+            this.Attribute.ReadOnly = true;
+            this.Attribute.ToolTipText = "Logical Name";
+            this.Attribute.Width = 150;
+            // 
+            // DisplayName
+            // 
+            this.DisplayName.DataPropertyName = "DisplayName";
+            this.DisplayName.HeaderText = "Display Name";
+            this.DisplayName.Name = "DisplayName";
+            this.DisplayName.ReadOnly = true;
+            this.DisplayName.ToolTipText = "Display Name";
+            this.DisplayName.Width = 150;
+            // 
+            // Format
+            // 
+            this.Format.DataPropertyName = "Format";
+            this.Format.HeaderText = "Format";
+            this.Format.Name = "Format";
+            this.Format.ReadOnly = true;
+            this.Format.ToolTipText = "Format";
+            this.Format.Width = 200;
             // 
             // AutoNumMgr
             // 
@@ -549,6 +656,7 @@ namespace Rappen.XTB.AutoNumManager
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.gbExisting.ResumeLayout(false);
+            this.gbExisting.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridAttributes)).EndInit();
             this.gbTarget.ResumeLayout(false);
             this.gbTarget.PerformLayout();
@@ -597,9 +705,15 @@ namespace Rappen.XTB.AutoNumManager
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton tsbAbout;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Attribute;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Format;
         private System.Windows.Forms.TextBox txtHint;
+        private Button btnGuessSeed;
+        private Label label10;
+        private CheckBox chkAllowNoSeqNo;
+        private RadioButton rbShowAttributesAllString;
+        private RadioButton rbShowAttributesOnlyNumber;
+        private DataGridViewTextBoxColumn Attribute;
+        private DataGridViewTextBoxColumn DisplayName;
+        private DataGridViewTextBoxColumn Format;
 
         public CloseReason AutoNumMgr_ClosingPlugin { get; private set; }
     }

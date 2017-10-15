@@ -16,9 +16,11 @@ namespace Rappen.XTB.AutoNumManager
             attributeMetadata = metadata;
         }
 
-        public string Attribute { get { return attributeMetadata.LogicalName; } }
+        public string LogicalName { get { return attributeMetadata.LogicalName; } }
 
-        public string Format { get { return attributeMetadata.AutoNumberFormat; } }
+        public string DisplayName { get { return attributeMetadata.DisplayName?.UserLocalizedLabel?.Label; } }
+
+        public string Format { get { return attributeMetadata.AutoNumberFormat ?? string.Empty; } }
 
         public override string ToString()
         {

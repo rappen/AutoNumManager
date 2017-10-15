@@ -13,7 +13,7 @@ namespace Rappen.XTB.AutoNumManager
 
         public static String[] entityProperties = { "LogicalName", "DisplayName", "PrimaryNameAttribute", "ObjectTypeCode", "IsManaged", "IsCustomizable", "IsCustomEntity", "IsIntersect", "IsValidForAdvancedFind" };
         public static String[] entityDetails = { "Attributes" };
-        public static String[] attributeProperties = { "DisplayName", "Description", "AttributeType", "IsManaged", "IsCustomizable", "IsCustomAttribute", "SchemaName", "AutoNumberFormat", "MaxLength" };
+        public static String[] attributeProperties = { "DisplayName", "Description", "AttributeType", "IsManaged", "IsCustomizable", "IsCustomAttribute", "IsValidForCreate", "IsPrimaryName", "SchemaName", "AutoNumberFormat", "MaxLength" };
 
         public static AttributeMetadata GetAttribute(IOrganizationService service, string entity, string attribute, object value)
         {
