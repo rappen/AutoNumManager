@@ -1,9 +1,4 @@
-﻿// TODO:
-// Tillåt numrering av onumrerade fält.
-// Tillåt att SEQNUM saknas, med varning.
-// 
-
-using Microsoft.Xrm.Sdk;
+﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Query;
