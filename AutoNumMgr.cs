@@ -361,13 +361,14 @@ namespace Rappen.XTB.AutoNumManager
             var langid = int.Parse(txtLanguageId.Text.Trim());
             var solutionname = (cmbSolution.SelectedItem as SolutionProxy)?.UniqueName;
             var entity = ((EntityMetadataProxy)cmbEntities.SelectedItem).Metadata;
-            var attributename = lblPrefix.Text + txtLogicalName.Text.Trim();
+            var logicalname = lblPrefix.Text + txtLogicalName.Text.Trim();
+            var schemaname = update ? (gridAttributes.SelectedRows[0].DataBoundItem as AttributeProxy).attributeMetadata.SchemaName : logicalname;
             var seed = txtSeed.Enabled ? txtSeed.Text.Trim() : string.Empty;
             var attribute = new StringAttributeMetadata
             {
                 AutoNumberFormat = txtNumberFormat.Text.Trim(),
-                LogicalName = attributename,
-                SchemaName = attributename,
+                LogicalName = logicalname,
+                SchemaName = schemaname,
                 RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
                 MaxLength = int.Parse(txtMaxLen.Text.Trim()),
                 DisplayName = new Microsoft.Xrm.Sdk.Label(txtDisplayName.Text, langid),
@@ -411,7 +412,7 @@ namespace Rappen.XTB.AutoNumManager
                     Service.Execute(new SetAutoNumberSeedRequest
                     {
                         EntityName = entity.LogicalName,
-                        AttributeName = attributename,
+                        AttributeName = logicalname,
                         Value = int.Parse(seed)
                     });
                 }
