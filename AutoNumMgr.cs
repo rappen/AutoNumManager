@@ -306,16 +306,20 @@ namespace Rappen.XTB.AutoNumManager
             var seed = txtSeed.Enabled ? txtSeed.Text.Trim() : string.Empty;
             var format = txtNumberFormat.Text.Trim();
             var message = "Creating auto number attribute.";
+            var log = "Create";
             if (!txtLogicalName.Enabled)
             {
+                log = "Update";
                 var attribute = gridAttributes.SelectedRows[0].DataBoundItem as AttributeProxy;
                 if (string.IsNullOrEmpty(attribute.Format) && !string.IsNullOrEmpty(format))
                 {   // Numbering a previously not numbered attribute
                     message = "Adding auto number format to an existing attribute will make this field read-only on all forms.\nNumber will be assigned instead.";
+                    log = "ConvertToNumbered";
                 }
                 else if (!string.IsNullOrEmpty(attribute.Format) && string.IsNullOrWhiteSpace(format))
                 {   // Removing numbering from an attribute
                     message = "This will remove auto numbering from the attribute.\nAttribute will now be editable by users.";
+                    log = "ConvertFromNumbered";
                 }
                 else if (!attribute.Format.Trim().Equals(format))
                 {   // Changing the number format
@@ -344,6 +348,7 @@ namespace Rappen.XTB.AutoNumManager
             {
                 return;
             }
+            LogUse(log);
             WriteAttribute(!txtLogicalName.Enabled);
         }
 
@@ -390,7 +395,6 @@ namespace Rappen.XTB.AutoNumManager
                         return;
                     }
                 }
-                LogUse($"UpdateAttribute");
             }
             else
             {
@@ -400,7 +404,6 @@ namespace Rappen.XTB.AutoNumManager
                     Attribute = attribute,
                     SolutionUniqueName = solutionname
                 };
-                LogUse($"CreateAttribute:{attribute.AutoNumberFormat}");
             }
             WorkAsync(new WorkAsyncInfo("Saving attribute...",
             (eventargs) =>
@@ -408,7 +411,7 @@ namespace Rappen.XTB.AutoNumManager
                 Service.Execute(req);
                 if (!string.IsNullOrEmpty(seed))
                 {
-                    LogUse($"SetSeed:{seed}");
+                    LogUse("SetSeed");
                     Service.Execute(new SetAutoNumberSeedRequest
                     {
                         EntityName = entity.LogicalName,
@@ -445,7 +448,7 @@ namespace Rappen.XTB.AutoNumManager
             WorkAsync(new WorkAsyncInfo("Deleting attribute...",
             (eventargs) =>
             {
-                LogUse("DeleteAttribute");
+                LogUse("Delete");
                 Service.Execute(req);
             })
             {
@@ -826,11 +829,13 @@ namespace Rappen.XTB.AutoNumManager
                 var lastseqstr = lastvalue.Substring(seqstart, length);
                 if (int.TryParse(lastseqstr, out int lastseq))
                 {
+                    LogUse("GuessSeed succeeded");
                     result = lastseq;
                 }
             }
             if (result == 0)
             {
+                LogUse("GuessSeed failed");
                 throw new Exception("That was hard. Couldn't even guess what current SEQNUM is.\n" +
                     "Numbered value for last created record is:  \n" + lastvalue);
             }
