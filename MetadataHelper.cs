@@ -1,19 +1,29 @@
-﻿using Microsoft.Xrm.Sdk.Metadata;
+﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Metadata;
+using Microsoft.Xrm.Sdk.Metadata.Query;
 using System;
 using System.Collections.Generic;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Metadata.Query;
-using Microsoft.Xrm.Sdk.Messages;
 
 namespace Rappen.XTB.AutoNumManager
 {
     public static class MetadataHelper
     {
+        #region Public Fields
+
+        public static String[] attributeProperties = { "DisplayName", "Description", "AttributeType", "IsManaged", "IsCustomizable", "IsCustomAttribute", "IsValidForCreate", "IsPrimaryName", "SchemaName", "AutoNumberFormat", "MaxLength" };
+        public static String[] entityDetails = { "Attributes" };
+        public static String[] entityProperties = { "LogicalName", "DisplayName", "PrimaryNameAttribute", "ObjectTypeCode", "IsManaged", "IsCustomizable", "IsCustomEntity", "IsIntersect", "IsValidForAdvancedFind" };
+
+        #endregion Public Fields
+
+        #region Private Fields
+
         private static Dictionary<string, EntityMetadata> entities = new Dictionary<string, EntityMetadata>();
 
-        public static String[] entityProperties = { "LogicalName", "DisplayName", "PrimaryNameAttribute", "ObjectTypeCode", "IsManaged", "IsCustomizable", "IsCustomEntity", "IsIntersect", "IsValidForAdvancedFind" };
-        public static String[] entityDetails = { "Attributes" };
-        public static String[] attributeProperties = { "DisplayName", "Description", "AttributeType", "IsManaged", "IsCustomizable", "IsCustomAttribute", "IsValidForCreate", "IsPrimaryName", "SchemaName", "AutoNumberFormat", "MaxLength" };
+        #endregion Private Fields
+
+        #region Public Methods
 
         public static AttributeMetadata GetAttribute(IOrganizationService service, string entity, string attribute, object value)
         {
@@ -88,5 +98,7 @@ namespace Rappen.XTB.AutoNumManager
             };
             return service.Execute(req) as RetrieveMetadataChangesResponse;
         }
+
+        #endregion Public Methods
     }
 }

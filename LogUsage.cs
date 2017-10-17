@@ -9,6 +9,8 @@ namespace Rappen.XTB.AutoNumManager
 {
     public class LogUsage
     {
+        #region Public Methods
+
         public static async Task DoLog(string action)
         {
             try
@@ -41,6 +43,10 @@ namespace Rappen.XTB.AutoNumManager
             catch { }
         }
 
+        #endregion Public Methods
+
+        #region Internal Methods
+
         internal static bool PromptToLog()
         {
             var msg = "Anonymous statistics will be collected to improve the functionality of Auto Number Manager.\n\n" +
@@ -48,5 +54,7 @@ namespace Rappen.XTB.AutoNumManager
             MessageBox.Show(msg, "Statistics", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return true;
         }
+
+        #endregion Internal Methods
     }
 }

@@ -1,20 +1,25 @@
 ﻿using Microsoft.Xrm.Sdk.Metadata;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rappen.XTB.AutoNumManager
 {
     internal class EntityMetadataProxy
     {
+        #region Public Fields
+
         public EntityMetadata Metadata;
+
+        #endregion Public Fields
+
+        #region Public Constructors
 
         public EntityMetadataProxy(EntityMetadata entityMetadata)
         {
             Metadata = entityMetadata;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override string ToString()
         {
@@ -28,5 +33,7 @@ namespace Rappen.XTB.AutoNumManager
             }
             return base.ToString();
         }
+
+        #endregion Public Methods
     }
 }
