@@ -168,7 +168,7 @@ namespace Rappen.XTB.AutoNumManager
                     }
                 }
             }
-            if (DialogResult.OK != MessageBox.Show($"{message}\n\nPlease confirm!", "Confirm", MessageBoxButtons.OKCancel))
+            if (DialogResult.OK != MessageBox.Show($"{message}\n\nPlease confirm!", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Information))
             {
                 return;
             }
@@ -814,10 +814,18 @@ namespace Rappen.XTB.AutoNumManager
             var entity = ((EntityMetadataProxy)cmbEntities.SelectedItem).Metadata;
             var logicalname = lblPrefix.Text + txtLogicalName.Text.Trim();
             var schemaname = update ? (gridAttributes.SelectedRows[0].DataBoundItem as AttributeProxy).attributeMetadata.SchemaName : logicalname;
+            var format = txtNumberFormat.Text.Trim();
+            if (format.Equals(ParseFormatSEQNUM(format, string.Empty)))
+            {
+                if (DialogResult.Cancel==MessageBox.Show("Creating number formats without SEQNUM placeholder can result in non-unique values.\n\nPlease confirm!", "No sequence number", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning))
+                {
+                    return;
+                }
+            }
             var seed = txtSeed.Enabled ? txtSeed.Text.Trim() : string.Empty;
             var attribute = new StringAttributeMetadata
             {
-                AutoNumberFormat = txtNumberFormat.Text.Trim(),
+                AutoNumberFormat = format,
                 LogicalName = logicalname,
                 SchemaName = schemaname,
                 RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
@@ -876,7 +884,7 @@ namespace Rappen.XTB.AutoNumManager
                     }
                     else
                     {
-                        MessageBox.Show("Attribute saved!");
+                        MessageBox.Show("Attribute saved!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             });
