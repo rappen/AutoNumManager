@@ -93,12 +93,22 @@ namespace Rappen.XTB.AutoNumManager
             else
             {
                 LogError("CRM version too old for Auto Number Manager");
+                LogUse("IncompatibleCRM");
                 MessageBox.Show($"Auto Number feature was introduced in\nMicrosoft Dynamics 365 July 2017 (9.0)\nCurrent version is {orgver}\n\nPlease connect to a newer organization to use this cool tool.",
                     "Organization too old", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void AutoNumMgr_Load(object sender, EventArgs e)
+        {
+            if (settings == null)
+            {
+                LoadSettings();
+            }
+            LogUse("Load");
+        }
+
+        private void LoadSettings()
         {
             // Loads or creates the settings for the plugin
             if (!SettingsManager.Instance.TryLoad(GetType(), out settings))
@@ -122,7 +132,6 @@ namespace Rappen.XTB.AutoNumManager
                 settings.UseLog = LogUsage.PromptToLog();
             }
             settings.Version = version;
-            LogUse("Load");
         }
 
         private void btnCreateUpdate_Click(object sender, EventArgs e)
@@ -373,6 +382,10 @@ namespace Rappen.XTB.AutoNumManager
 
         internal void LogUse(string action, bool forceLog = false)
         {
+            if (settings == null)
+            {
+                LoadSettings();
+            }
             if (settings.UseLog == true || forceLog)
             {
                 LogUsage.DoLog(action);
@@ -563,21 +576,29 @@ namespace Rappen.XTB.AutoNumManager
                   {
                       if (completedargs.Result is EntityMetadata)
                       {
-                          entity.Metadata = (EntityMetadata)completedargs.Result;
-                          var attributes = entity.Metadata.Attributes
-                            .Where(a => a.AttributeType == AttributeTypeCode.String &&
-                                a.IsValidForCreate.Value == true &&
-                                a.IsCustomizable.Value == true &&
-                                (!onlyNumbered || !string.IsNullOrEmpty(a.AutoNumberFormat)))
-                            .Select(a => new AttributeProxy((StringAttributeMetadata)a)).OrderBy(a => a.LogicalName).ToList();
-                          var bindingList = new BindingList<AttributeProxy>(attributes);
-                          var source = new BindingSource(bindingList, null);
-                          UpdateUI(() =>
+                          try
                           {
-                              gridAttributes.DataSource = source;
-                              gridAttributes.Enabled = true;
-                              gridAttributes.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-                          });
+                              entity.Metadata = (EntityMetadata)completedargs.Result;
+                              var attributes = entity.Metadata.Attributes
+                                .Where(a => a.AttributeType == AttributeTypeCode.String &&
+                                    a.IsValidForCreate.Value == true &&
+                                    a.IsCustomizable.Value == true &&
+                                    (!onlyNumbered || !string.IsNullOrEmpty(a.AutoNumberFormat)))
+                                .Select(a => new AttributeProxy((StringAttributeMetadata)a)).OrderBy(a => a.LogicalName).ToList();
+                              var bindingList = new BindingList<AttributeProxy>(attributes);
+                              var source = new BindingSource(bindingList, null);
+                              UpdateUI(() =>
+                              {
+                                  gridAttributes.DataSource = source;
+                                  gridAttributes.Enabled = true;
+                                  gridAttributes.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                              });
+                          }
+                          catch (MissingMethodException mex)
+                          {
+                              LogUse("IncompatibleSDK");
+                              MessageBox.Show("It seems you are using too old SDK, that is unaware of the AutoNumberFormat property.", "SDK error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                          }
                       }
                   }
             });
