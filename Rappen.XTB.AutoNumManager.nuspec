@@ -14,7 +14,7 @@
     <copyright>Copyright 2017 Jonas Rapp</copyright>
     <tags>XrmToolBox Plugins AutoNumManager</tags>
     <dependencies>
-      <dependency id="XrmToolBox" version="1.2017.10.1" />
+      <dependency id="XrmToolBox" version="1.2017.10.19" />
     </dependencies>
   </metadata>
   <files>
