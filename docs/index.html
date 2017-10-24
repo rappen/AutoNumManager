@@ -1,13 +1,11 @@
 ﻿<!doctype html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Auto Number Manager for XrmToolBox</title>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
-          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -111,7 +109,7 @@
         }
 
         PrintHistoryInfo = function (info, callback) {
-            var counttext = "";
+            var counttext = "<u>Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Count&nbsp;&nbsp;Released&nbsp;&nbsp;</u><br />";
             $(info.versions).each(function (index) {
                 var link = "";
                 if (this.url) {
@@ -132,9 +130,12 @@
                     date = "&nbsp;&nbsp;<em>" + this.host + "</em>";
                 }
                 var count = this.downloads;
-                counttext = tag + " <strong>" + count.padLeft(5, '&nbsp;') + "</strong>" + date + "<br/>" + counttext;
+                counttext += tag + " <strong>" + count.padLeft(5, '&nbsp;') + "</strong>" + date + "<br/>";
             });
-            counttext = "<u>Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Count&nbsp;&nbsp;Released&nbsp;&nbsp;</u><br />" + counttext;
+            if (GH_REPO == "FetchXMLBuilder") {
+                counttext += GetCodePlexDownloads(true);
+            }
+            counttext += "";
             $("#hist-downloads").html(counttext);
             if (callback) {
                 callback();
