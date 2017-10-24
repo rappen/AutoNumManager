@@ -216,7 +216,7 @@ namespace Rappen.XTB.AutoNumManager
             txtDescription.Text = string.Empty;
             txtMaxLen.Text = "100";
             txtNumberFormat.Text = "{SEQNUM:5}";
-            txtSeed.Text = string.Empty;
+            txtSeed.Text = "1";
             NumberConditionsChanged();
             btnCreateUpdate.Text = "Create";
             btnDelete.Enabled = false;
@@ -370,7 +370,6 @@ namespace Rappen.XTB.AutoNumManager
         private void txtSeed_TextChanged(object sender, EventArgs e)
         {
             NumberConditionsChanged();
-            NewMethod();
         }
 
         #endregion Form Event Handlers
@@ -683,11 +682,6 @@ namespace Rappen.XTB.AutoNumManager
             {
                 txtLanguageId.Text = result.Entities[0]["uilanguageid"].ToString();
             }
-        }
-
-        private void NewMethod()
-        {
-            throw new NotImplementedException();
         }
 
         private void NumberConditionsChanged()
