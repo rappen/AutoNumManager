@@ -199,10 +199,7 @@ namespace Rappen.XTB.AutoNumManager
             try
             {
                 var seed = GuessSeed();
-                if (DialogResult.Yes == MessageBox.Show($"Parsed existing value as: {seed}.\nSet it +1 as new seed?", "Guess current SEQNUM", MessageBoxButtons.YesNo, MessageBoxIcon.Information))
-                {
-                    txtSeed.Text = (seed + 1).ToString();
-                }
+                MessageBox.Show($"Parsed existing value as:\n  {seed}.", "Guess current SEQNUM", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -445,8 +442,8 @@ namespace Rappen.XTB.AutoNumManager
                     else
                     {
                         MessageBox.Show("Attribute deleted!");
-                        UpdateUI(ForceLoadAttributes);
                     }
+                    UpdateUI(ForceLoadAttributes);
                 }
             });
         }
@@ -805,6 +802,7 @@ namespace Rappen.XTB.AutoNumManager
             finally
             {
                 txtSeed.Enabled = validseqnum;
+                btnGuessSeed.Enabled = validseqnum && !txtLogicalName.Enabled;
             }
             return format;
         }
@@ -894,7 +892,6 @@ namespace Rappen.XTB.AutoNumManager
                         Value = int.Parse(seed)
                     });
                 }
-                UpdateUI(ForceLoadAttributes);
             })
             {
                 PostWorkCallBack = (completedargs) =>
@@ -907,6 +904,7 @@ namespace Rappen.XTB.AutoNumManager
                     {
                         MessageBox.Show("Attribute saved!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
+                    UpdateUI(ForceLoadAttributes);
                 }
             });
         }
