@@ -254,17 +254,18 @@ namespace Rappen.XTB.AutoNumManager
 
         private void gridAttributes_SelectionChanged(object sender, EventArgs e)
         {
-            gbAttribute.Enabled = false;
             txtHint.Text = string.Empty;
             var grid = sender as DataGridView;
             if (grid?.SelectedRows?.Count == 0)
             {
+                gbAttribute.Enabled = false;
                 return;
             }
             var row = grid.SelectedRows[0];
             var attribute = row.DataBoundItem as AttributeProxy;
             if (attribute == null)
             {
+                gbAttribute.Enabled = false;
                 return;
             }
             var logical = attribute.LogicalName;
@@ -803,19 +804,23 @@ namespace Rappen.XTB.AutoNumManager
 
         private string ParseNumberFormat(string format, string seed)
         {
-            try
+            txtHint.Text = string.Empty;
+            if (!string.IsNullOrWhiteSpace(format))
             {
-                format = ParseFormatSEQNUM(format, seed);
-                format = ParseFormatRANDSTRING(format);
-                format = ParseFormatDATETIMEUTC(format);
-                txtHint.Text = "Format successfully parsed.";
-                btnCreateUpdate.Enabled = true;
-            }
-            catch (Exception ex)
-            {
-                txtHint.Text = ex.Message;
-                format = string.Empty;
-                btnCreateUpdate.Enabled = false;
+                try
+                {
+                    format = ParseFormatSEQNUM(format, seed);
+                    format = ParseFormatRANDSTRING(format);
+                    format = ParseFormatDATETIMEUTC(format);
+                    txtHint.Text = "Format successfully parsed.";
+                    btnCreateUpdate.Enabled = true;
+                }
+                catch (Exception ex)
+                {
+                    txtHint.Text = ex.Message;
+                    format = string.Empty;
+                    btnCreateUpdate.Enabled = false;
+                }
             }
             return format;
         }

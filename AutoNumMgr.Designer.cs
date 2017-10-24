@@ -73,15 +73,15 @@ namespace Rappen.XTB.AutoNumManager
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gbExisting = new System.Windows.Forms.GroupBox();
             this.rbShowAttributesAllString = new System.Windows.Forms.RadioButton();
+            this.btnNew = new System.Windows.Forms.Button();
             this.rbShowAttributesOnlyNumber = new System.Windows.Forms.RadioButton();
             this.gridAttributes = new System.Windows.Forms.DataGridView();
-            this.gbTarget = new System.Windows.Forms.GroupBox();
-            this.cmbSolution = new System.Windows.Forms.ComboBox();
-            this.btnNew = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
             this.Attribute = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DisplayName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Format = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gbTarget = new System.Windows.Forms.GroupBox();
+            this.cmbSolution = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.gbAttribute.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -506,6 +506,18 @@ namespace Rappen.XTB.AutoNumManager
             this.rbShowAttributesAllString.UseVisualStyleBackColor = true;
             this.rbShowAttributesAllString.CheckedChanged += new System.EventHandler(this.rbShowAttributes_CheckedChanged);
             // 
+            // btnNew
+            // 
+            this.btnNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNew.Enabled = false;
+            this.btnNew.Location = new System.Drawing.Point(333, 436);
+            this.btnNew.Name = "btnNew";
+            this.btnNew.Size = new System.Drawing.Size(134, 23);
+            this.btnNew.TabIndex = 4;
+            this.btnNew.Text = "New Attribute";
+            this.btnNew.UseVisualStyleBackColor = true;
+            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
+            // 
             // rbShowAttributesOnlyNumber
             // 
             this.rbShowAttributesOnlyNumber.AutoSize = true;
@@ -521,6 +533,7 @@ namespace Rappen.XTB.AutoNumManager
             // 
             // gridAttributes
             // 
+            this.gridAttributes.AllowUserToResizeRows = false;
             this.gridAttributes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -546,6 +559,7 @@ namespace Rappen.XTB.AutoNumManager
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.gridAttributes.DefaultCellStyle = dataGridViewCellStyle2;
             this.gridAttributes.Enabled = false;
+            this.gridAttributes.EnableHeadersVisualStyles = false;
             this.gridAttributes.Location = new System.Drawing.Point(9, 48);
             this.gridAttributes.Name = "gridAttributes";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -556,58 +570,11 @@ namespace Rappen.XTB.AutoNumManager
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.gridAttributes.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.gridAttributes.RowHeadersVisible = false;
             this.gridAttributes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridAttributes.Size = new System.Drawing.Size(458, 382);
             this.gridAttributes.TabIndex = 3;
             this.gridAttributes.SelectionChanged += new System.EventHandler(this.gridAttributes_SelectionChanged);
-            // 
-            // gbTarget
-            // 
-            this.gbTarget.Controls.Add(this.cmbSolution);
-            this.gbTarget.Controls.Add(this.label8);
-            this.gbTarget.Controls.Add(this.cmbEntities);
-            this.gbTarget.Controls.Add(this.label1);
-            this.gbTarget.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbTarget.Location = new System.Drawing.Point(0, 0);
-            this.gbTarget.Name = "gbTarget";
-            this.gbTarget.Size = new System.Drawing.Size(476, 83);
-            this.gbTarget.TabIndex = 1;
-            this.gbTarget.TabStop = false;
-            this.gbTarget.Text = "Target";
-            // 
-            // cmbSolution
-            // 
-            this.cmbSolution.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbSolution.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbSolution.Enabled = false;
-            this.cmbSolution.FormattingEnabled = true;
-            this.cmbSolution.Location = new System.Drawing.Point(106, 26);
-            this.cmbSolution.Name = "cmbSolution";
-            this.cmbSolution.Size = new System.Drawing.Size(361, 21);
-            this.cmbSolution.TabIndex = 1;
-            this.cmbSolution.SelectedIndexChanged += new System.EventHandler(this.cmbSolution_SelectedIndexChanged);
-            // 
-            // btnNew
-            // 
-            this.btnNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNew.Enabled = false;
-            this.btnNew.Location = new System.Drawing.Point(333, 436);
-            this.btnNew.Name = "btnNew";
-            this.btnNew.Size = new System.Drawing.Size(134, 23);
-            this.btnNew.TabIndex = 4;
-            this.btnNew.Text = "New Attribute";
-            this.btnNew.UseVisualStyleBackColor = true;
-            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 29);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(45, 13);
-            this.label8.TabIndex = 3;
-            this.label8.Text = "Solution";
             // 
             // Attribute
             // 
@@ -636,6 +603,42 @@ namespace Rappen.XTB.AutoNumManager
             this.Format.ToolTipText = "Format";
             this.Format.Width = 200;
             // 
+            // gbTarget
+            // 
+            this.gbTarget.Controls.Add(this.cmbSolution);
+            this.gbTarget.Controls.Add(this.label8);
+            this.gbTarget.Controls.Add(this.cmbEntities);
+            this.gbTarget.Controls.Add(this.label1);
+            this.gbTarget.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbTarget.Location = new System.Drawing.Point(0, 0);
+            this.gbTarget.Name = "gbTarget";
+            this.gbTarget.Size = new System.Drawing.Size(476, 83);
+            this.gbTarget.TabIndex = 1;
+            this.gbTarget.TabStop = false;
+            this.gbTarget.Text = "Target";
+            // 
+            // cmbSolution
+            // 
+            this.cmbSolution.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbSolution.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSolution.Enabled = false;
+            this.cmbSolution.FormattingEnabled = true;
+            this.cmbSolution.Location = new System.Drawing.Point(106, 26);
+            this.cmbSolution.Name = "cmbSolution";
+            this.cmbSolution.Size = new System.Drawing.Size(361, 21);
+            this.cmbSolution.TabIndex = 1;
+            this.cmbSolution.SelectedIndexChanged += new System.EventHandler(this.cmbSolution_SelectedIndexChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 29);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(45, 13);
+            this.label8.TabIndex = 3;
+            this.label8.Text = "Solution";
+            // 
             // AutoNumMgr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -644,7 +647,7 @@ namespace Rappen.XTB.AutoNumManager
             this.Controls.Add(this.toolStrip1);
             this.Name = "AutoNumMgr";
             this.Size = new System.Drawing.Size(870, 577);
-            //this.TabIcon = ((System.Drawing.Image)(resources.GetObject("$this.TabIcon")));
+            this.TabIcon = ((System.Drawing.Image)(resources.GetObject("$this.TabIcon")));
             this.ConnectionUpdated += new XrmToolBox.Extensibility.PluginControlBase.ConnectionUpdatedHandler(this.AutoNumMgr_ConnectionUpdated);
             this.Load += new System.EventHandler(this.AutoNumMgr_Load);
             this.toolStrip1.ResumeLayout(false);
