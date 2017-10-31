@@ -108,32 +108,6 @@ namespace Rappen.XTB.AutoNumManager
             LogUse("Load");
         }
 
-        private void LoadSettings()
-        {
-            // Loads or creates the settings for the plugin
-            if (!SettingsManager.Instance.TryLoad(GetType(), out settings))
-            {
-                settings = new Settings();
-                LogWarning("Settings not found => created");
-            }
-            else
-            {
-                LogInfo("Settings found and loaded");
-            }
-            var ass = Assembly.GetExecutingAssembly().GetName();
-            var version = ass.Version.ToString();
-            if (!version.Equals(settings.Version))
-            {
-                // Reset some settings when new version is deployed
-                settings.UseLog = null;
-            }
-            if (settings.UseLog == null)
-            {
-                settings.UseLog = LogUsage.PromptToLog();
-            }
-            settings.Version = version;
-        }
-
         private void btnCreateUpdate_Click(object sender, EventArgs e)
         {
             var seed = txtSeed.Enabled ? txtSeed.Text.Trim() : string.Empty;
@@ -293,7 +267,12 @@ namespace Rappen.XTB.AutoNumManager
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("jonasrapp.innofactor.se/2017/10/anm.html");
+            System.Diagnostics.Process.Start("http://jonasrapp.innofactor.se/2017/10/anm.html");
+        }
+
+        private void llDocs_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/create-auto-number-attributes");
         }
 
         private void llDatetime_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -685,6 +664,32 @@ namespace Rappen.XTB.AutoNumManager
             }
         }
 
+        private void LoadSettings()
+        {
+            // Loads or creates the settings for the plugin
+            if (!SettingsManager.Instance.TryLoad(GetType(), out settings))
+            {
+                settings = new Settings();
+                LogWarning("Settings not found => created");
+            }
+            else
+            {
+                LogInfo("Settings found and loaded");
+            }
+            var ass = Assembly.GetExecutingAssembly().GetName();
+            var version = ass.Version.ToString();
+            if (!version.Equals(settings.Version))
+            {
+                // Reset some settings when new version is deployed
+                settings.UseLog = null;
+            }
+            if (settings.UseLog == null)
+            {
+                settings.UseLog = LogUsage.PromptToLog();
+            }
+            settings.Version = version;
+        }
+
         private void NumberConditionsChanged()
         {
             txtHint.Text = string.Empty;
@@ -835,7 +840,7 @@ namespace Rappen.XTB.AutoNumManager
             var format = txtNumberFormat.Text.Trim();
             if (format.Equals(ParseFormatSEQNUM(format, string.Empty)))
             {
-                if (DialogResult.Cancel==MessageBox.Show("Creating number formats without SEQNUM placeholder can result in non-unique values.\n\nPlease confirm!", "No sequence number", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning))
+                if (DialogResult.Cancel == MessageBox.Show("Creating number formats without SEQNUM placeholder can result in non-unique values.\n\nPlease confirm!", "No sequence number", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning))
                 {
                     return;
                 }
