@@ -20,6 +20,11 @@ namespace Rappen.XTB.AutoNumManager
     {
         #region Private Fields
 
+        private const string aiEndpoint = "https://dc.services.visualstudio.com/v2/track";
+        //private const string aiKey = "cc7cb081-b489-421d-bb61-2ee53495c336";    // jonas@rappen.net tenant, TestAI 
+        private const string aiKey = "eed73022-2444-45fd-928b-5eebd8fa46a6";    // jonas@rappen.net tenant, XrmToolBox
+        private AppInsights ai = new AppInsights(new AiConfig(aiEndpoint, aiKey) { PluginName = "Auto Number Manager" });
+
         private List<EntityMetadataProxy> entities;
         private Settings settings;
 
@@ -301,20 +306,7 @@ namespace Rappen.XTB.AutoNumManager
             var about = new About(this);
             about.StartPosition = FormStartPosition.CenterParent;
             about.lblVersion.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            about.chkStatAllow.Checked = settings.UseLog != false;
             about.ShowDialog();
-            if (settings.UseLog != about.chkStatAllow.Checked)
-            {
-                settings.UseLog = about.chkStatAllow.Checked;
-                if (settings.UseLog == true)
-                {
-                    LogUse("Accept", true);
-                }
-                else if (settings.UseLog == false)
-                {
-                    LogUse("Deny", true);
-                }
-            }
         }
 
         private void tsbClose_Click(object sender, EventArgs e)
@@ -358,6 +350,7 @@ namespace Rappen.XTB.AutoNumManager
 
         internal void LogUse(string action, bool forceLog = false)
         {
+            ai.WriteEvent(action);
             if (settings == null)
             {
                 LoadSettings();
@@ -616,7 +609,7 @@ namespace Rappen.XTB.AutoNumManager
         {
             cmbSolution.Items.Clear();
             cmbSolution.Enabled = false;
-            WorkAsync(new WorkAsyncInfo("Loading entities...",
+            WorkAsync(new WorkAsyncInfo("Loading solutions...",
                 (eventargs) =>
                 {
                     EnableControls(false);
@@ -681,7 +674,7 @@ namespace Rappen.XTB.AutoNumManager
             if (!version.Equals(settings.Version))
             {
                 // Reset some settings when new version is deployed
-                settings.UseLog = null;
+                settings.UseLog = true;
             }
             if (settings.UseLog == null)
             {

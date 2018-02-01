@@ -11,6 +11,9 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>An XrmToolBox plugin to manage the Auto Number features introduced for Microsoft Dynamics 365 v9.0</description>
     <summary>An XrmToolBox plugin to manage the Auto Number features introduced for Microsoft Dynamics 365 v9.0</summary>
+    <releaseNotes>
+* Azure Application Insights for anonymous usage statistics
+    </releaseNotes>
     <copyright>Copyright 2017 Jonas Rapp</copyright>
     <tags>XrmToolBox Plugins AutoNumManager</tags>
     <dependencies>
