@@ -687,7 +687,7 @@ namespace Rappen.XTB.AutoNumManager
         {
             txtHint.Text = string.Empty;
             var seed = txtSeed.Enabled ? txtSeed.Text.Trim() : string.Empty;
-            if (!string.IsNullOrEmpty(seed) && !int.TryParse(seed, out int max))
+            if (!string.IsNullOrEmpty(seed) && !Int64.TryParse(seed, out Int64 max))
             {
                 txtHint.Text = $"Seed '{seed}' is not a valid number.";
                 return;
@@ -886,7 +886,7 @@ namespace Rappen.XTB.AutoNumManager
                     {
                         EntityName = entity.LogicalName,
                         AttributeName = logicalname,
-                        Value = int.Parse(seed)
+                        Value = Int64.Parse(seed)
                     });
                 }
             })
