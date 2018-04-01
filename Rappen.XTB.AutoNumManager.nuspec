@@ -4,7 +4,7 @@
     <id>Rappen.XrmToolBox.AutoNumManager</id>
     <version>1.0.0</version>
     <title>Auto Number Manager for XrmToolBox</title>
-    <authors>Jonas Rapp, Innofactor Sweden</authors>
+    <authors>Jonas Rapp</authors>
     <owners>rappen</owners>
     <projectUrl>http://anm.xrmtoolbox.com</projectUrl>
     <iconUrl>http://anm.xrmtoolbox.com/images/ANM-150-transp.png</iconUrl>
