@@ -300,7 +300,7 @@ namespace Rappen.XTB.AutoNumManager
             LoadAttributes(false);
         }
 
-        private void tsbAbout_Click(object sender, EventArgs e)
+        private void tslAbout_Click(object sender, EventArgs e)
         {
             LogUse("OpenAbout");
             var about = new About(this);

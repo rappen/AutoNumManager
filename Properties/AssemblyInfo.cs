@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("AutoNumManager")]
 [assembly: AssemblyDescription("XrmToolBox plugin to manage Auto Number attributes in Microsoft Dynamics 365")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Jonas Rapp, Innofactor Sweden")]
+[assembly: AssemblyCompany("Jonas Rapp, Sweden")]
 [assembly: AssemblyProduct("AutoNumManager")]
 [assembly: AssemblyCopyright("Copyright © Jonas Rapp 2017")]
 [assembly: AssemblyTrademark("")]

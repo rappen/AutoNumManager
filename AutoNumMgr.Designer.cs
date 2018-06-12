@@ -39,7 +39,7 @@ namespace Rappen.XTB.AutoNumManager
             this.tsbClose = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbFXB = new System.Windows.Forms.ToolStripButton();
-            this.tsbAbout = new System.Windows.Forms.ToolStripButton();
+            this.tslAbout = new System.Windows.Forms.ToolStripLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbEntities = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -97,14 +97,15 @@ namespace Rappen.XTB.AutoNumManager
             // 
             // toolStrip1
             // 
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbClose,
             this.toolStripSeparator1,
             this.tsbFXB,
-            this.tsbAbout});
+            this.tslAbout});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(870, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(870, 31);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -113,14 +114,14 @@ namespace Rappen.XTB.AutoNumManager
             this.tsbClose.Image = ((System.Drawing.Image)(resources.GetObject("tsbClose.Image")));
             this.tsbClose.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbClose.Name = "tsbClose";
-            this.tsbClose.Size = new System.Drawing.Size(56, 22);
+            this.tsbClose.Size = new System.Drawing.Size(64, 28);
             this.tsbClose.Text = "Close";
             this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
             // 
             // tsbFXB
             // 
@@ -128,19 +129,19 @@ namespace Rappen.XTB.AutoNumManager
             this.tsbFXB.Image = ((System.Drawing.Image)(resources.GetObject("tsbFXB.Image")));
             this.tsbFXB.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbFXB.Name = "tsbFXB";
-            this.tsbFXB.Size = new System.Drawing.Size(131, 22);
+            this.tsbFXB.Size = new System.Drawing.Size(139, 28);
             this.tsbFXB.Text = "Show data with FXB";
             this.tsbFXB.Click += new System.EventHandler(this.tsbFXB_Click);
             // 
-            // tsbAbout
+            // tslAbout
             // 
-            this.tsbAbout.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsbAbout.Image = ((System.Drawing.Image)(resources.GetObject("tsbAbout.Image")));
-            this.tsbAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbAbout.Name = "tsbAbout";
-            this.tsbAbout.Size = new System.Drawing.Size(60, 22);
-            this.tsbAbout.Text = "About";
-            this.tsbAbout.Click += new System.EventHandler(this.tsbAbout_Click);
+            this.tslAbout.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tslAbout.Image = ((System.Drawing.Image)(resources.GetObject("tslAbout.Image")));
+            this.tslAbout.IsLink = true;
+            this.tslAbout.Name = "tslAbout";
+            this.tslAbout.Size = new System.Drawing.Size(106, 28);
+            this.tslAbout.Text = "by Jonas Rapp";
+            this.tslAbout.Click += new System.EventHandler(this.tslAbout_Click);
             // 
             // label1
             // 
@@ -222,7 +223,7 @@ namespace Rappen.XTB.AutoNumManager
             this.gbAttribute.Enabled = false;
             this.gbAttribute.Location = new System.Drawing.Point(0, 0);
             this.gbAttribute.Name = "gbAttribute";
-            this.gbAttribute.Size = new System.Drawing.Size(390, 552);
+            this.gbAttribute.Size = new System.Drawing.Size(390, 546);
             this.gbAttribute.TabIndex = 2;
             this.gbAttribute.TabStop = false;
             this.gbAttribute.Text = "Auto Numbered attribute";
@@ -231,7 +232,7 @@ namespace Rappen.XTB.AutoNumManager
             // 
             this.llDocs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.llDocs.AutoSize = true;
-            this.llDocs.Location = new System.Drawing.Point(106, 499);
+            this.llDocs.Location = new System.Drawing.Point(106, 493);
             this.llDocs.Name = "llDocs";
             this.llDocs.Size = new System.Drawing.Size(212, 13);
             this.llDocs.TabIndex = 33;
@@ -297,7 +298,7 @@ namespace Rappen.XTB.AutoNumManager
             // 
             this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDelete.Enabled = false;
-            this.btnDelete.Location = new System.Drawing.Point(242, 519);
+            this.btnDelete.Location = new System.Drawing.Point(242, 513);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(134, 23);
             this.btnDelete.TabIndex = 15;
@@ -404,7 +405,7 @@ namespace Rappen.XTB.AutoNumManager
             // btnCreateUpdate
             // 
             this.btnCreateUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCreateUpdate.Location = new System.Drawing.Point(106, 519);
+            this.btnCreateUpdate.Location = new System.Drawing.Point(106, 513);
             this.btnCreateUpdate.Name = "btnCreateUpdate";
             this.btnCreateUpdate.Size = new System.Drawing.Size(134, 23);
             this.btnCreateUpdate.TabIndex = 14;
@@ -489,7 +490,7 @@ namespace Rappen.XTB.AutoNumManager
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 25);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 31);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -500,7 +501,7 @@ namespace Rappen.XTB.AutoNumManager
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.gbAttribute);
-            this.splitContainer1.Size = new System.Drawing.Size(870, 552);
+            this.splitContainer1.Size = new System.Drawing.Size(870, 546);
             this.splitContainer1.SplitterDistance = 476;
             this.splitContainer1.TabIndex = 7;
             // 
@@ -513,7 +514,7 @@ namespace Rappen.XTB.AutoNumManager
             this.gbExisting.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbExisting.Location = new System.Drawing.Point(0, 83);
             this.gbExisting.Name = "gbExisting";
-            this.gbExisting.Size = new System.Drawing.Size(476, 469);
+            this.gbExisting.Size = new System.Drawing.Size(476, 463);
             this.gbExisting.TabIndex = 3;
             this.gbExisting.TabStop = false;
             this.gbExisting.Text = "Existing Text attributes";
@@ -535,7 +536,7 @@ namespace Rappen.XTB.AutoNumManager
             // 
             this.btnNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNew.Enabled = false;
-            this.btnNew.Location = new System.Drawing.Point(333, 436);
+            this.btnNew.Location = new System.Drawing.Point(333, 430);
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new System.Drawing.Size(134, 23);
             this.btnNew.TabIndex = 4;
@@ -597,7 +598,7 @@ namespace Rappen.XTB.AutoNumManager
             this.gridAttributes.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.gridAttributes.RowHeadersVisible = false;
             this.gridAttributes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridAttributes.Size = new System.Drawing.Size(458, 382);
+            this.gridAttributes.Size = new System.Drawing.Size(458, 376);
             this.gridAttributes.TabIndex = 3;
             this.gridAttributes.SelectionChanged += new System.EventHandler(this.gridAttributes_SelectionChanged);
             // 
@@ -732,7 +733,6 @@ namespace Rappen.XTB.AutoNumManager
         private System.Windows.Forms.TextBox txtSeed;
         private System.Windows.Forms.ToolStripButton tsbFXB;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton tsbAbout;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.TextBox txtHint;
         private Button btnGuessSeed;
@@ -745,6 +745,7 @@ namespace Rappen.XTB.AutoNumManager
         private DataGridViewTextBoxColumn Format;
         private LinkLabel llDocs;
         private Label label11;
+        private ToolStripLabel tslAbout;
 
         public CloseReason AutoNumMgr_ClosingPlugin { get; private set; }
     }
