@@ -7,17 +7,17 @@
     <authors>Jonas Rapp</authors>
     <owners>rappen</owners>
     <projectUrl>http://anm.xrmtoolbox.com</projectUrl>
-    <iconUrl>http://anm.xrmtoolbox.com/images/ANM-150-transp.png</iconUrl>
+    <iconUrl>http://anm.xrmtoolbox.com/images/ANM-150-tsp.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>An XrmToolBox plugin to manage the Auto Number features introduced for Microsoft Dynamics 365 v9.0</description>
     <summary>An XrmToolBox plugin to manage the Auto Number features introduced for Microsoft Dynamics 365 v9.0</summary>
     <releaseNotes>
-#7 Fixed problem with really large seeds
+Rebranded
     </releaseNotes>
-    <copyright>Copyright 2018 Jonas Rapp</copyright>
+    <copyright>Copyright 2017-2018 Jonas Rapp</copyright>
     <tags>XrmToolBox Plugins AutoNumManager</tags>
     <dependencies>
-      <dependency id="XrmToolBox" version="1.2018.3.21" />
+      <dependency id="XrmToolBox" version="1.2018.6.25" />
     </dependencies>
   </metadata>
   <files>

@@ -16,7 +16,7 @@ using XrmToolBox.Extensibility.Interfaces;
 
 namespace Rappen.XTB.AutoNumManager
 {
-    public partial class AutoNumMgr : PluginControlBase, IStatusBarMessenger, IMessageBusHost, IGitHubPlugin, IPayPalPlugin, IHelpPlugin
+    public partial class AutoNumMgr : PluginControlBase, IStatusBarMessenger, IMessageBusHost, IGitHubPlugin, IPayPalPlugin, IHelpPlugin, IAboutPlugin
     {
         #region Private Fields
 
@@ -70,6 +70,11 @@ namespace Rappen.XTB.AutoNumManager
         public void OnIncomingMessage(MessageBusEventArgs message)
         {
             // This plugin does not accept incoming messages
+        }
+
+        public void ShowAboutDialog()
+        {
+            tslAbout_Click(null, null);
         }
 
         #endregion Public Methods
