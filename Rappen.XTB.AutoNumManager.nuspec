@@ -12,7 +12,10 @@
     <description>An XrmToolBox plugin to manage the Auto Number features introduced for Microsoft Dynamics 365 v9.0</description>
     <summary>An XrmToolBox plugin to manage the Auto Number features introduced for Microsoft Dynamics 365 v9.0</summary>
     <releaseNotes>
-Rebranded
+#9 Problems with Quote Number
+
+Generic change to never update the attribute metadata if they have not been changed, happens typically when only seed shall be set.
+Changed behavior to never update RequiredLevel, but it is set to None for new attributes.
     </releaseNotes>
     <copyright>Copyright 2017-2018 Jonas Rapp</copyright>
     <tags>XrmToolBox Plugins AutoNumManager</tags>
