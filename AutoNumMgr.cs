@@ -833,6 +833,7 @@ namespace Rappen.XTB.AutoNumManager
             var langid = int.Parse(txtLanguageId.Text.Trim());
             var solutionname = (cmbSolution.SelectedItem as SolutionProxy)?.UniqueName;
             var entity = ((EntityMetadataProxy)cmbEntities.SelectedItem).Metadata;
+            var existingattribute = update ? (gridAttributes.SelectedRows[0].DataBoundItem as AttributeProxy).attributeMetadata : null;
             var logicalname = lblPrefix.Text + txtLogicalName.Text.Trim();
             var schemaname = update ? (gridAttributes.SelectedRows[0].DataBoundItem as AttributeProxy).attributeMetadata.SchemaName : logicalname;
             var format = txtNumberFormat.Text.Trim();
@@ -843,27 +844,33 @@ namespace Rappen.XTB.AutoNumManager
                     return;
                 }
             }
+            var maxlen = int.Parse(txtMaxLen.Text.Trim());
             var seed = txtSeed.Enabled ? txtSeed.Text.Trim() : string.Empty;
             var attribute = new StringAttributeMetadata
             {
                 AutoNumberFormat = format,
                 LogicalName = logicalname,
                 SchemaName = schemaname,
-                RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
-                MaxLength = int.Parse(txtMaxLen.Text.Trim()),
+                MaxLength = maxlen,
                 DisplayName = new Microsoft.Xrm.Sdk.Label(txtDisplayName.Text, langid),
                 Description = new Microsoft.Xrm.Sdk.Label(txtDescription.Text, langid)
             };
-            OrganizationRequest req;
+            OrganizationRequest req = null;
             if (update)
             {
-                req = new UpdateAttributeRequest
+                if (existingattribute.AutoNumberFormat != format ||
+                    existingattribute.MaxLength != maxlen ||
+                    existingattribute.DisplayName.LocalizedLabels.FirstOrDefault(l => l.LanguageCode == langid)?.Label != txtDisplayName.Text ||
+                    existingattribute.Description.LocalizedLabels.FirstOrDefault(l => l.LanguageCode == langid)?.Label != txtDescription.Text)
                 {
-                    EntityName = entity.LogicalName,
-                    Attribute = attribute,
-                    SolutionUniqueName = solutionname
-                };
-                if (update && !string.IsNullOrEmpty(seed))
+                    req = new UpdateAttributeRequest
+                    {
+                        EntityName = entity.LogicalName,
+                        Attribute = attribute,
+                        SolutionUniqueName = solutionname
+                    };
+                }
+                if (!string.IsNullOrEmpty(seed))
                 {
                     if (DialogResult.Yes != MessageBox.Show("Setting the seed for existing an attribute MAY result in duplicate data!\nDo you really want to change the seed?", "Confirm seed", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation))
                     {
@@ -873,6 +880,7 @@ namespace Rappen.XTB.AutoNumManager
             }
             else
             {
+                attribute.RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None);
                 req = new CreateAttributeRequest
                 {
                     EntityName = entity.LogicalName,
@@ -883,7 +891,10 @@ namespace Rappen.XTB.AutoNumManager
             WorkAsync(new WorkAsyncInfo("Saving attribute...",
             (eventargs) =>
             {
-                Service.Execute(req);
+                if (req != null)
+                {
+                    Service.Execute(req);
+                }
                 if (!string.IsNullOrEmpty(seed))
                 {
                     LogUse("SetSeed");
