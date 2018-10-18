@@ -837,10 +837,22 @@ namespace Rappen.XTB.AutoNumManager
             var logicalname = lblPrefix.Text + txtLogicalName.Text.Trim();
             var schemaname = update ? (gridAttributes.SelectedRows[0].DataBoundItem as AttributeProxy).attributeMetadata.SchemaName : logicalname;
             var format = txtNumberFormat.Text.Trim();
-            if (format.Equals(ParseFormatSEQNUM(format, string.Empty)))
+            if (!string.IsNullOrEmpty(format))
             {
-                if (DialogResult.Cancel == MessageBox.Show("Creating number formats without SEQNUM placeholder can result in non-unique values.\n\nPlease confirm!", "No sequence number", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning))
+                try
                 {
+                    var seqnum = ParseFormatSEQNUM(format, string.Empty);
+                    if (format.Equals(seqnum))
+                    {
+                        if (DialogResult.Cancel == MessageBox.Show("Creating number formats without SEQNUM placeholder can result in non-unique values.\n\nPlease confirm!", "No sequence number", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning))
+                        {
+                            return;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
