@@ -1,27 +1,30 @@
 ﻿/* ***********************************************************
  * XTBAppInsights.cs
- * Created by Jonas Rapp https://jonasrapp.net/
- * Immensely inspired by code from Jason Lattimer
- * https://github.com/jlattimer/D365AppInsights
- * Simplifies logging to Azure Application Insights
- * from XrmToolBox tools.
+ * Found at: https://gist.github.com/rappen/fbdbb644b3fffec1305b00a51b007fa6
+ * Created by: Jonas Rapp https://jonasrapp.net/
+ * Immensely inspired by: code from Jason Lattimer https://github.com/jlattimer/D365AppInsights
+ *
+ * Simplifies logging to Azure Application Insights from XrmToolBox tools.
+ *
  * Sample from tool constructor:
- *    ai = new AppInsights(new AiConfig("https://dc.services.visualstudio.com/v2/track", "[a guid that is the key to your appinsights resource])
-      {
-          PluginName = "FetchXML Builder"
-      });
+ *    ai = new AppInsights(new AiConfig("https://dc.services.visualstudio.com/v2/track", "[a guid that is the key to your appinsights resource]"));
  * Sample call:
  *    ai.WriteEvent(action, count, duration, HandleAIResult);
+ * Sample HandleAIResult:
+ *    private void HandleAIResult(string result)
+ *    {
+ *        if (!string.IsNullOrEmpty(result)) { LogError("Failed to write to Application Insights:\n{0}", result); }
+ *    }
  *    
- * Enjoy responsibly.
+ *               Enjoy responsibly.
  * **********************************************************/
 
 using System;
 using System.IO;
+using System.Net.Http;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
-using System.Net.Http;
 using System.Text;
 
 public class AppInsights
