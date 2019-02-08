@@ -9,15 +9,15 @@
     <projectUrl>http://anm.xrmtoolbox.com</projectUrl>
     <iconUrl>http://anm.xrmtoolbox.com/images/ANM-150-tsp.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>An XrmToolBox plugin to manage the Auto Number features introduced for Microsoft Dynamics 365 v9.0</description>
+    <description>An XrmToolBox plugin to manage the Auto Number features introduced for Microsoft Dynamics 365 v9.0<br/>
+Read more: https://jonasrapp.net/2017/10/anm/</description>
     <summary>An XrmToolBox plugin to manage the Auto Number features introduced for Microsoft Dynamics 365 v9.0</summary>
     <releaseNotes>
-#9 Problems with Quote Number
+#6 and #13 Error shown when removing auto number format from an attribute.
 
-Generic change to never update the attribute metadata if they have not been changed, happens typically when only seed shall be set.
-Changed behavior to never update RequiredLevel, but it is set to None for new attributes.
+Layout improvements.
     </releaseNotes>
-    <copyright>Copyright 2017-2018 Jonas Rapp</copyright>
+    <copyright>Copyright 2017-2019 Jonas Rapp</copyright>
     <tags>XrmToolBox Plugins AutoNumManager</tags>
     <dependencies>
       <dependency id="XrmToolBox" version="1.2018.6.25" />
