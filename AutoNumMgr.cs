@@ -277,7 +277,7 @@ namespace Rappen.XTB.AutoNumManager
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://jonasrapp.innofactor.se/2017/10/anm.html");
+            System.Diagnostics.Process.Start("https://jonasrapp.net/2017/10/anm/");
         }
 
         private void llDocs_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
