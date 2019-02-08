@@ -9,7 +9,8 @@
     <projectUrl>http://anm.xrmtoolbox.com</projectUrl>
     <iconUrl>http://anm.xrmtoolbox.com/images/ANM-150-tsp.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>An XrmToolBox plugin to manage the Auto Number features introduced for Microsoft Dynamics 365 v9.0<br/>
+    <description>An XrmToolBox plugin to manage the Auto Number features introduced for Microsoft Dynamics 365 v9.0
+    
 Read more: https://jonasrapp.net/2017/10/anm/</description>
     <summary>An XrmToolBox plugin to manage the Auto Number features introduced for Microsoft Dynamics 365 v9.0</summary>
     <releaseNotes>
