@@ -9,14 +9,14 @@
     <projectUrl>http://anm.xrmtoolbox.com</projectUrl>
     <iconUrl>http://anm.xrmtoolbox.com/images/ANM-150-tsp.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>An XrmToolBox plugin to manage the Auto Number features introduced for Microsoft Dynamics 365 v9.0
+    <description>A tool to manage the Auto Number features in Microsoft Dynamics 365 and the Common Data Service (CDS)
     
 Read more: https://jonasrapp.net/2017/10/anm/</description>
-    <summary>An XrmToolBox plugin to manage the Auto Number features introduced for Microsoft Dynamics 365 v9.0</summary>
+    <summary>An XrmToolBox tool to manage the Auto Number features in Microsoft Dynamics 365 and the Common Data Service (CDS)</summary>
     <releaseNotes>
-#6 and #13 Error shown when removing auto number format from an attribute.
+#18 Updating auto number format breaks field level security settings
 
-Layout improvements.
+Rebranded with 2019 design
     </releaseNotes>
     <copyright>Copyright 2017-2019 Jonas Rapp</copyright>
     <tags>XrmToolBox Plugins AutoNumManager</tags>
