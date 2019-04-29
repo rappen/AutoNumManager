@@ -858,15 +858,6 @@ namespace Rappen.XTB.AutoNumManager
             }
             var maxlen = int.Parse(txtMaxLen.Text.Trim());
             var seed = txtSeed.Enabled ? txtSeed.Text.Trim() : string.Empty;
-            var attribute = new StringAttributeMetadata
-            {
-                AutoNumberFormat = format,
-                LogicalName = logicalname,
-                SchemaName = schemaname,
-                MaxLength = maxlen,
-                DisplayName = new Microsoft.Xrm.Sdk.Label(txtDisplayName.Text, langid),
-                Description = new Microsoft.Xrm.Sdk.Label(txtDescription.Text, langid)
-            };
             OrganizationRequest req = null;
             if (update)
             {
@@ -875,6 +866,13 @@ namespace Rappen.XTB.AutoNumManager
                     existingattribute.DisplayName.LocalizedLabels.FirstOrDefault(l => l.LanguageCode == langid)?.Label != txtDisplayName.Text ||
                     existingattribute.Description.LocalizedLabels.FirstOrDefault(l => l.LanguageCode == langid)?.Label != txtDescription.Text)
                 {
+                    var attribute = ((RetrieveAttributeResponse)Service.Execute(new RetrieveAttributeRequest
+                    {
+                        EntityLogicalName = entity.LogicalName,
+                        LogicalName = logicalname,
+                        RetrieveAsIfPublished = true
+                    })).AttributeMetadata;
+                    attribute.AutoNumberFormat = format;
                     req = new UpdateAttributeRequest
                     {
                         EntityName = entity.LogicalName,
@@ -892,7 +890,16 @@ namespace Rappen.XTB.AutoNumManager
             }
             else
             {
-                attribute.RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None);
+                var attribute = new StringAttributeMetadata
+                {
+                    AutoNumberFormat = format,
+                    LogicalName = logicalname,
+                    SchemaName = schemaname,
+                    MaxLength = maxlen,
+                    DisplayName = new Microsoft.Xrm.Sdk.Label(txtDisplayName.Text, langid),
+                    Description = new Microsoft.Xrm.Sdk.Label(txtDescription.Text, langid),
+                    RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None)
+                };
                 req = new CreateAttributeRequest
                 {
                     EntityName = entity.LogicalName,
