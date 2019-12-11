@@ -882,7 +882,7 @@ namespace Rappen.XTB.AutoNumManager
                 }
                 if (!string.IsNullOrEmpty(seed))
                 {
-                    if (DialogResult.Yes != MessageBox.Show("Setting the seed for existing an attribute MAY result in duplicate data!\nDo you really want to change the seed?", "Confirm seed", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation))
+                    if (DialogResult.Yes != MessageBox.Show("Setting the seed for an existing attribute MAY result in duplicate data!\nDo you really want to change the seed?", "Confirm seed", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation))
                     {
                         return;
                     }
