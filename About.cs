@@ -30,19 +30,19 @@ namespace Rappen.XTB.AutoNumManager
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             autoNumMgr.LogUse("About-OpenHomepage");
-            System.Diagnostics.Process.Start("http://anm.xrmtoolbox.com");
+            System.Diagnostics.Process.Start("https://jonasr.app/ANM");
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             autoNumMgr.LogUse("About-OpenBlog");
-            System.Diagnostics.Process.Start("http://jonasrapp.net");
+            System.Diagnostics.Process.Start("http://jonasr.app");
         }
 
         private void linkLabel4_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             autoNumMgr.LogUse("About-OpenTwitter");
-            System.Diagnostics.Process.Start("http://twitter.com/rappen");
+            System.Diagnostics.Process.Start("https://x.com/rappen");
         }
 
         private void PopulateAssemblies()

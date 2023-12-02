@@ -51,14 +51,14 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel1.Location = new System.Drawing.Point(557, 205);
+            this.linkLabel1.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel1.Location = new System.Drawing.Point(555, 211);
             this.linkLabel1.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(190, 22);
+            this.linkLabel1.Size = new System.Drawing.Size(224, 32);
             this.linkLabel1.TabIndex = 2;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "anm.xrmtoolbox.com";
+            this.linkLabel1.Text = "JonasR.app/ANM";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // label2
@@ -109,9 +109,9 @@
             this.label4.Location = new System.Drawing.Point(558, 98);
             this.label4.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(42, 13);
+            this.label4.Size = new System.Drawing.Size(58, 13);
             this.label4.TabIndex = 8;
-            this.label4.Text = "Twitter:";
+            this.label4.Text = "X (Twitter):";
             // 
             // label5
             // 
@@ -158,6 +158,7 @@
             this.listAssemblies.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listAssemblies.FullRowSelect = true;
             this.listAssemblies.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listAssemblies.HideSelection = false;
             this.listAssemblies.Location = new System.Drawing.Point(3, 16);
             this.listAssemblies.Name = "listAssemblies";
             this.listAssemblies.ShowGroups = false;

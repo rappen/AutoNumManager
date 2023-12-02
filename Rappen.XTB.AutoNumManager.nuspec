@@ -1,30 +1,34 @@
 <?xml version="1.0"?>
-<package >
-  <metadata>
-    <id>Rappen.XrmToolBox.AutoNumManager</id>
-    <version>1.0.0</version>
-    <title>Auto Number Manager for XrmToolBox</title>
-    <authors>Jonas Rapp</authors>
-    <owners>rappen</owners>
-    <projectUrl>http://anm.xrmtoolbox.com</projectUrl>
-    <iconUrl>http://anm.xrmtoolbox.com/images/ANM-150-tsp.png</iconUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A tool to manage the Auto Number features in Microsoft Dynamics 365 and the Common Data Service (CDS)
-    
-Read more: https://jonasrapp.net/2017/10/anm/</description>
-    <summary>An XrmToolBox tool to manage the Auto Number features in Microsoft Dynamics 365 and the Common Data Service (CDS)</summary>
-    <releaseNotes>
-#18 Updating auto number format breaks field level security settings
+<package>
+	<metadata>
+		<id>Rappen.XrmToolBox.AutoNumManager</id>
+		<version>1.0.0</version>
+		<title>Auto Number Manager for XrmToolBox</title>
+		<authors>Jonas Rapp</authors>
+		<owners>rappen</owners>
+		<projectUrl>https://jonasr.app/ANM</projectUrl>
+		<iconUrl>https://jonasr.app/wp-content/uploads/ANM-2019-150-tsp.png</iconUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>
+The primary goal of this tool is to give Microsoft Power Platform customizers a way of managing Auto Number attributes.
+This feature was introduced with the 9.0 release from October 2017. However, this release only supports creating and managing these attributes through the SDK, a user interface for the features was expected to be available from the 9.1 release of the platform.
 
-Rebranded with 2019 design
-    </releaseNotes>
-    <copyright>Copyright 2017-2019 Jonas Rapp</copyright>
-    <tags>XrmToolBox Plugins AutoNumManager</tags>
-    <dependencies>
-      <dependency id="XrmToolBox" version="1.2018.6.25" />
-    </dependencies>
-  </metadata>
-  <files>
-    <file src="bin\Release\Rappen.XTB.AutoNumManager.dll" target="lib\net452\Plugins" />
-  </files>
+With Auto Number Manager for XrmToolBox, you can create, alter, and delete these attributes through an easy-to-use UI.
+
+Read more: https://jonasr.app/ANM
+		</description>
+		<summary>XrmToolBox tool to manage the Auto Number features in Microsoft Power Platform / Dataverse / Dynamics 365</summary>
+		<releaseNotes>
+Updated to Latest 'n Greatest versions of XrmToolBox and Microsoft CRMSDK libraries!
+Moving documentation to my common site: https://jonasr.app/ANM
+		</releaseNotes>
+		<copyright>Copyright 2017-2023 Jonas Rapp</copyright>
+		<tags>XrmToolBox Plugins AutoNumManager</tags>
+		<dependencies>
+			<dependency id="XrmToolBox" version="1.2023.10.67" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="bin\Release\Rappen.XTB.AutoNumManager.dll" target="lib\net48\Plugins" />
+	</files>
 </package>

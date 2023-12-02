@@ -62,7 +62,7 @@ namespace Rappen.XTB.AutoNumManager
         { get { return "jonas@rappen.net"; } }
 
         public string HelpUrl
-        { get { return "http://anm.xrmtoolbox.com"; } }
+        { get { return "https://jonasr.app/ANM"; } }
 
         public string RepositoryName
         { get { return "AutoNumManager"; } }
