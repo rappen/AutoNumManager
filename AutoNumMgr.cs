@@ -21,10 +21,14 @@ namespace Rappen.XTB.AutoNumManager
         #region Private Fields
 
         private const string aiEndpoint = "https://dc.services.visualstudio.com/v2/track";
-        //private const string aiKey = "cc7cb081-b489-421d-bb61-2ee53495c336";    // jonas@rappen.net tenant, TestAI 
-        private const string aiKey = "eed73022-2444-45fd-928b-5eebd8fa46a6";    // jonas@rappen.net tenant, XrmToolBox
-        private AppInsights ai = new AppInsights(new AiConfig(aiEndpoint, aiKey) { PluginName = "Auto Number Manager" });
 
+        //private const string aiKey = "cc7cb081-b489-421d-bb61-2ee53495c336";    // jonas@rappen.net tenant, TestAI
+        private const string aiKey1 = "eed73022-2444-45fd-928b-5eebd8fa46a6";    // jonas@rappen.net tenant, XrmToolBox
+
+        private const string aiKey2 = "d46e9c12-ee8b-4b28-9643-dae62ae7d3d4";    // jonas@jonasr.app, XrmToolBoxTools
+
+        private readonly AppInsights ai1;
+        private readonly AppInsights ai2;
         private List<EntityMetadataProxy> entities;
         private Settings settings;
 
@@ -35,6 +39,8 @@ namespace Rappen.XTB.AutoNumManager
         public AutoNumMgr()
         {
             InitializeComponent();
+            ai1 = new AppInsights(aiEndpoint, aiKey1, Assembly.GetExecutingAssembly(), "Auto Number Manager");
+            ai2 = new AppInsights(aiEndpoint, aiKey2, Assembly.GetExecutingAssembly(), "Auto Number Manager");
         }
 
         #endregion Public Constructors
@@ -49,12 +55,20 @@ namespace Rappen.XTB.AutoNumManager
 
         #region Public Properties
 
-        public string DonationDescription { get { return "Auto Number Manager Fan Club"; } }
-        public string EmailAccount { get { return "jonas@rappen.net"; } }
-        public string HelpUrl { get { return "http://anm.xrmtoolbox.com"; } }
-        public string RepositoryName { get { return "AutoNumManager"; } }
+        public string DonationDescription
+        { get { return "Auto Number Manager Fan Club"; } }
 
-        public string UserName { get { return "Rappen"; } }
+        public string EmailAccount
+        { get { return "jonas@rappen.net"; } }
+
+        public string HelpUrl
+        { get { return "http://anm.xrmtoolbox.com"; } }
+
+        public string RepositoryName
+        { get { return "AutoNumManager"; } }
+
+        public string UserName
+        { get { return "Rappen"; } }
 
         #endregion Public Properties
 
@@ -63,7 +77,7 @@ namespace Rappen.XTB.AutoNumManager
         public override void ClosingPlugin(PluginCloseInfo info)
         {
             SettingsManager.Instance.Save(GetType(), settings);
-            LogUse("Close");
+            LogUse("Close", true);
             base.ClosingPlugin(info);
         }
 
@@ -115,7 +129,7 @@ namespace Rappen.XTB.AutoNumManager
             {
                 LoadSettings();
             }
-            LogUse("Load");
+            LogUse("Load", true);
         }
 
         private void btnCreateUpdate_Click(object sender, EventArgs e)
@@ -353,16 +367,12 @@ namespace Rappen.XTB.AutoNumManager
 
         #region My Methods
 
-        internal void LogUse(string action, bool forceLog = false)
+        internal void LogUse(string action, bool ai2 = false)
         {
-            ai.WriteEvent(action);
-            if (settings == null)
+            ai1.WriteEvent(action);
+            if (ai2)
             {
-                LoadSettings();
-            }
-            if (settings.UseLog == true || forceLog)
-            {
-                LogUsage.DoLog(action);
+                this.ai2.WriteEvent(action);
             }
         }
 
@@ -676,15 +686,6 @@ namespace Rappen.XTB.AutoNumManager
             }
             var ass = Assembly.GetExecutingAssembly().GetName();
             var version = ass.Version.ToString();
-            if (!version.Equals(settings.Version))
-            {
-                // Reset some settings when new version is deployed
-                settings.UseLog = true;
-            }
-            if (settings.UseLog == null)
-            {
-                settings.UseLog = LogUsage.PromptToLog();
-            }
             settings.Version = version;
         }
 

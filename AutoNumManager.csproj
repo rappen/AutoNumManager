@@ -193,7 +193,6 @@
       <DependentUpon>AutoNumMgr.cs</DependentUpon>
     </Compile>
     <Compile Include="EntityMetadataProxy.cs" />
-    <Compile Include="LogUsage.cs" />
     <Compile Include="MetadataHelper.cs" />
     <Compile Include="PluginInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
