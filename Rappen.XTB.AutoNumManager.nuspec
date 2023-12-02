@@ -19,8 +19,9 @@ Read more: https://jonasr.app/ANM
 		</description>
 		<summary>XrmToolBox tool to manage the Auto Number features in Microsoft Power Platform / Dataverse / Dynamics 365</summary>
 		<releaseNotes>
-Updated to Latest 'n Greatest versions of XrmToolBox and Microsoft CRMSDK libraries!
-Moving documentation to my common site: https://jonasr.app/ANM
+* Updated to Latest 'n Greatest versions of XrmToolBox and Microsoft CRMSDK libraries!
+* Tiny descriptions and links updated.
+* Moving documentation to my common site: https://jonasr.app/ANM
 		</releaseNotes>
 		<copyright>Copyright 2017-2023 Jonas Rapp</copyright>
 		<tags>XrmToolBox Plugins AutoNumManager</tags>
